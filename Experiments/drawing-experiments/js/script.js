@@ -9,7 +9,17 @@ Here is a description of this template p5 project.
 //
 // Description of setup() goes here.
 function setup() {
-  
+  createCanvas(500,500);
+
+  background(255,200,200);
+
+  ellipseMode(CORNER);
+  ellipse(250,250,200,200);
+  ellipse(250,250,80,80);
+  ellipse(250,250,60,60);
+
+
+
 }
 
 // draw()
