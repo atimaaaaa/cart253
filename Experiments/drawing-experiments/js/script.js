@@ -1,13 +1,13 @@
 /**************************************************
-Template p5 project
-Pippin Barr
+Drawing experiments with shape and color
+Atima Ng
 
-Here is a description of this template p5 project.
+Currently draws a straight face
 **************************************************/
 
 // setup()
 //
-// Description of setup() goes here.
+// Draws a face o the canvas.
 function setup() {
   createCanvas(500,500);
 
@@ -26,5 +26,4 @@ function setup() {
 //
 // Description of draw() goes here.
 function draw() {
-
 }
