@@ -1,5 +1,5 @@
 /**************************************************
-Activity 2: alien
+Activity 2: Draw an alien
 Atima Ng
 
 My take on the alien exercise.
@@ -7,7 +7,7 @@ My take on the alien exercise.
 
 // setup()
 //
-// Description of setup() goes here.
+// Draws an alien and its spaceship
 function setup() {
   createCanvas(640,480);
   angleMode(DEGREES);
@@ -71,4 +71,7 @@ function setup() {
 
 // draw()
 //
-// Description of draw() goes here.
+// Does nothing
+function draw (){
+
+}
