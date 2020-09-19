@@ -43,6 +43,15 @@ function setup() {
   ellipse(260,280,20,45);
   ellipse(380,280,20,45);
 
+
+// Drawing bowtie
+  fill(180,159,228);
+  triangle(305,355,330,365,305,375);
+  triangle(335,355,310,365,335,375);
+
+
+
+
 //Drawing spaceship
   fill(255,255,255,20);
   ellipse(320,480,600,900); // clear glass
