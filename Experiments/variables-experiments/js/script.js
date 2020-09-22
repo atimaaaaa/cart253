@@ -6,9 +6,10 @@ Here is a description of this template p5 project.
 **************************************************/
 
 let backgroundShade = 0;
-let circleX = 250;
+let circleX = 0;
 let circleY = 250;
-//let circleSize = 200;
+let circleSize = 200;
+let circleSpeed = 2;
 
 // setup()
 //
@@ -22,6 +23,8 @@ function setup() {
 // Description of draw() goes here.
 function draw() {
   background(backgroundShade);
+  circleX = circleX + circleSpeed;
+  circleSpeed = circleSpeed + 0.25;
   ellipse(circleX, circleY, circleSize);
 
 }
