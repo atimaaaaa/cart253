@@ -6,26 +6,27 @@ Here is a description of this template p5 project.
 **************************************************/
 
 let backgroundShade = 0;
-
-let circle = {
-  x: 0,
-  y:250,
-  size: 200,
-  speed: 2
-};
+let circleX = 0;
+let circleY = 250;
+let circleSize = 200;
+let circleSpeed = 2;
 
 // setup()
 //
 // Description of setup() goes here.
-function setup() {
+function setup(){
   createCanvas(500,500);
+
 }
 
 // draw()
 //
 // Description of draw() goes here.
-function draw() {
+function draw(){
   background(backgroundShade);
-  circle.x += circle.speed;
-  ellipse(circle.x, circle.y, circle.size);
+  circleX += circleSpeed;
+  ellipse(circleX, circleY, circleSize);
+
+  console.log(`circleX: ${circleX}, circleY: ${circleY}, circleSize: ${circleSize}, circleSpeed: ${circleSpeed}`);
+
 }
