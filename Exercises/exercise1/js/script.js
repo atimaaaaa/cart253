@@ -6,7 +6,7 @@ An exercise on practicing using map() and constrain(). This will draw a blue and
 **************************************************/
 let backgroundShade = 100; // Draws black background.
 
-// Declaring left circle
+// Declaring left circle propreties.
 let circle1 = {
   x: 50,
   y: 400,
@@ -16,11 +16,11 @@ let circle1 = {
   fill: {
     r: 38,
     g: 203,
-    b: 224,
-  } // blue circle
+    b: 224
+  } // Blue color
 }
 
-//Declaring right circle
+//Declaring right circle propreties.
 let circle2 = {
   x: 1000,
   y: 400,
@@ -30,11 +30,11 @@ let circle2 = {
   fill: {
     r:240,
     g:137,
-    b:125,
-  } // White circle
+    b:125
+  } // White color
 }
 
-// Declaring square.
+// Declaring square propreties.
 let square1 = {
   x: 0,
   y: 0,
@@ -42,7 +42,7 @@ let square1 = {
   fill: {
     r: 0,
     g: 0,
-    b: 0 // Black square.
+    b: 0 // Black color.
   }
 }
 
@@ -60,7 +60,7 @@ function setup() {
 function draw() {
   background(backgroundShade);
 
-  //Drawing growing left blue circle1
+  //Drawing growing blue circle on the left.
   circle1.x += circle1.speed;
   circle1.x = constrain(circle1.x, 0, 200);
   circle1.size += circle1.growthRate
@@ -68,7 +68,7 @@ function draw() {
   fill(circle1.fill.r, circle1.fill.g, circle1.fill.b);
   ellipse(circle1.x, circle1.y, circle1.size); // Drawing the left blue circle
 
-  // Drawing right circle2 growing.
+  // Drawing the growing orange circle on the right.
   circle2.x += +circle2.speed;
   circle2.x = constrain(circle2.x, 700, 900);
   circle2.size = circle1.size * circle2.ratio;
@@ -76,11 +76,11 @@ function draw() {
   fill(circle2.fill.r, circle2.fill.g, circle2.fill.b);
   ellipse(circle2.x, circle2.y, circle2.size); // drawing the right orange circle.
 
-  // Drawing growing square.
+  // Drawing growing square attached to the cursor.
   rectMode(CENTER);
   square1.fill.r = map(mouseX, 0, width, 0, 255);
   square1.fill.g = map(mouseY, 0, width, 0, 255);
   square1.fill.b = map(mouseX, 0, width, 0, 255);
   fill(square1.fill.r, square1.fill.g, square1.fill.b);
-  square(mouseX, mouseY, square1.size);
+  square(mouseX, mouseY, square1.size); // Drawing square moving with the cursor.
 }
