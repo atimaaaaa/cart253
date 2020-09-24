@@ -77,7 +77,7 @@ function draw() {
   ellipse(circle2.x, circle2.y, circle2.size); // drawing the right orange circle.
 
   // Drawing growing square attached to the cursor.
-  rectMode(CENTER);
+  rectMode(CENTER); // Square centered with the cursor.
   square1.fill.r = map(mouseX, 0, width, 0, 255);
   square1.fill.g = map(mouseY, 0, width, 0, 255);
   square1.fill.b = map(mouseX, 0, width, 0, 255);
