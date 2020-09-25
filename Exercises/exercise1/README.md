@@ -1,3 +1,3 @@
-# Template p5 project
+# I like to move it move it exercise
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+This is my take on the "I like to move it move it" exercise. Two circles will grow until it cannot anymore while the cursor changes in color depending on the cursor's position
