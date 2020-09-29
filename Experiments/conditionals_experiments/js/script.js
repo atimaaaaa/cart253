@@ -1,37 +1,24 @@
-let circle = {
-  x: 250,
-  y: 250,
-  size:100,
-  vx: 2,
-  vy: 0,
-  speed: 2
-}
+let angle = 0;
+
+let rectScale = 0;
 
 function setup() {
   createCanvas(500,500);
 }
 
-function draw(){
-  background(0);
+function draw() {
+  background(100);
 
-  if (mouseX < circle.x){
-    circle.vx = -circle.speed;
-  }
+  push();
+  fill(255,0,0);
+  rectMode(CENTER);
+  translate(width/2,height/2);
+  rotate(angle);
+  scale(rectScale);
+  rect(0,0,100,100);
+  pop();
 
-  else {
-    circle.vx = circle.speed;
-  }
+  angle = angle + 0.01;
+  rectScale = rectScale + 0.01;
 
-  if (mouseY < circle.y){
-    circle.vy = -circle.speed;
-  }
-
-  else {
-    circle.vy = circle.speed;
-  }
-
-  circle.x = circle.x + circle.vx;
-  circle.y = circle.y + circle.vy;
-
-  ellipse(circle.x, circle.y, circle.size);
 }
