@@ -1,20 +1,11 @@
-/**************************************************
-Template p5 project
-Pippin Barr
 
-Here is a description of this template p5 project.
-**************************************************/
-
-// setup()
-//
-// Description of setup() goes here.
 let backgroundShade = 0;
 
 let circle = {
   x: 0,
   y: 250,
   size: 100,
-  speed: 10
+  speed: 1
 }
 
 function setup() {
@@ -29,20 +20,10 @@ function draw() {
 
   circle.x = circle.x + circle.speed;
 
-  if (circle.x > width) {
-    circle.speed = -circle.speed;
-  }
+  fill(255,255,255);
 
-  if (circle.x < 0) {
-    circle.speed = -circle.speed;
-  }
-
-  if (mouseY < height/2){
+  if (circle.x > width/3 && circle.x < 2 * width/3) {
     fill(255,0,0);
-  }
-
-  if (mouseY > height/2){
-    fill(0,0,255);
   }
 
   ellipse(circle.x, circle.y, circle.size);
