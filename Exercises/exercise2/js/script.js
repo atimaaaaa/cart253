@@ -29,7 +29,7 @@ let coin = {
   vy:0,
   speed: 1,
   min: 50,
-  max: 650,
+  max: 600,
   image: undefined,
   bg: {
     r:0,
@@ -47,7 +47,7 @@ let user = {
 
 let tube = {
   x: 600,
-  y: 750,
+  y: 650,
   size:100,
   image: undefined,
   bg: {
@@ -71,7 +71,7 @@ function preload(){
 //
 // This is where initial positions of images will be placed.
 function setup() {
-  createCanvas(800,800);
+  createCanvas(800,700);
 
   //Thomp Position
   thomp.x = random(0, width);
