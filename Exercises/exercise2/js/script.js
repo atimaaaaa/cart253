@@ -14,7 +14,7 @@ Here is a description of this template p5 project.
    size:100,
    vx:0,
    vy:0,
-   speed: 3,
+   speed: 5,
    image: undefined
 }
 
@@ -24,7 +24,7 @@ Here is a description of this template p5 project.
     size:100,
     vx:0,
     vy:0,
-    speed: 10,
+    speed: 1,
     image: undefined
   }
 
@@ -44,13 +44,15 @@ function preload(){
 function setup() {
   createCanvas(800,800);
 
-  //Thomp movement
+  //Coin Position
   thomp.x = random(0, width);
   thomp.vy = thomp.speed;
 
-  //Coin movement
+  //Coin Positio
   coin.x = random(0, width);
   coin.vy = coin.speed;
+
+  noCursor();
 }
 // // draw()
 // //
@@ -59,9 +61,9 @@ function draw() {
   background(0);
   noStroke();
 
-  // Thomp movement
-    thomp.x = thomp.x + thomp.vx;
-    thomp.y = thomp.y + thomp.vy;
+  //Thomp movement
+  thomp.x = thomp.x + thomp.vx;
+  thomp.y = thomp.y + thomp.vy;
 
   if(thomp.y > height) {
     thomp.y = 0;
@@ -69,48 +71,51 @@ function draw() {
   }
 
   //Coin movement
-for (let i = 0; i < 10; i++){
-  coin.x = coin.x + coin.vx;
-  coin.y = coin.y + coin.vy;
-  }
+  for (let i = 0; i < 10; i++){
+    coin.x = coin.x + coin.vx;
+    coin.y = coin.y + coin.vy;
+    }
+
   if (coin.y > height) {
     coin.y = 0;
     coin.x = random(0,height);
   }
 
-
   // user movement
   user.x = mouseX;
   user.y = mouseY;
-
 
   //Action when thomp catches mario (user)
   let d = dist (thomp.x, thomp.y, user.x, user.y);
   if (d < thomp.size/2 + user.size/3) {
     noLoop();
+    background(255,0,0);
   }
 
-  // Action when user catches a coin
+  // Action when user touches the coin.
   let dcoin = dist (coin.x, coin.y, user.x, user.y);
-   if (d < coin.size/2 + user.size/3) {
-     background(255,0,0);
-   }
+  let bg = {
+    r: random(0,255),
+    g: random(0,255),
+    b: random(0,255),
+  }
 
-  //Action when user click on coin
-
+  if (dcoin < coin.size/2 + user.size/2) {
+    coin.x = random(0,width);
+    coin.y = 0; // Coin goes back on top at a random x position
+    background(bg.r, bg.g,bg.b);
+    }
 
   // Displaying thomp character.
-  for (let i = 0; i < 3; i++){
-    imageMode(CENTER);
-    image(thomp.image, thomp.x, thomp.y);
-  }
+  imageMode(CENTER);
+  image(thomp.image, thomp.x, thomp.y);
 
   // Displaying coins.
 
   imageMode(CENTER);
   image(coin.image, coin.x, coin.y);
 
-// display user
+// Displaying user
   imageMode(CENTER);
   image(user.image, user.x, user.y, 50,50);
 }
