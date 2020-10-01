@@ -2,7 +2,8 @@
 Exercise 2: Dodge-Em
 Atima Ng
 
-The goal is to drag as many coins into the tube before the evil thomp crushes the user who looks very similar to the very known plomber Mario. Here is a description of this template p5 project.
+Welcome to dodge-thomp!
+The goal is to drag as many coins into the tube before the evil thomp crushes the user who looks very similar to the very known plomber Mario. He is a greedy man who wants as many coins as possible!
 **************************************************/
 
 let thomp = {
