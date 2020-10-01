@@ -2,7 +2,7 @@
 Exercise 2: Dodge-Em
 Atima Ng
 
-Here is a description of this template p5 project.
+The goal is to drag as many coins into the tube before the evil thomp crushes the user who looks very similar to the very known plomber Mario. Here is a description of this template p5 project.
 **************************************************/
 
 let thomp = {
@@ -12,17 +12,29 @@ let thomp = {
    vx:0,
    vy:0,
    speed: 5,
-   image: undefined
+   image: undefined,
+   bg: {
+     r:255,
+     g:0,
+     b:0,
+   }
 }
 
 let coin = {
   x:250,
   y:0,
-  size:100,
+  size: 100,
   vx:0,
   vy:0,
   speed: 1,
-  image: undefined
+  min: 50,
+  max: 650,
+  image: undefined,
+  bg: {
+    r:0,
+    g:255,
+    b:0
+  }
 }
 
 let user = {
@@ -40,7 +52,7 @@ let tube = {
   bg: {
     r:0,
     g:255,
-    b:0
+    b:0,
   }
 }
 
@@ -68,17 +80,24 @@ function setup() {
   coin.x = random(0, width);
   coin.y = random(0, 700);
 
-
   noCursor();
 }
 // // draw()
 // //
-// // Description of draw() goes here.
+// // This is where the tube, coin, thomp and user will be displayed.
+
 function draw() {
   background(0);
   noStroke();
 
-  //Thomp movement
+  // To distract the thomp, if you press a key, the background will be black.
+  if (keyIsPressed) {
+      background(0);
+    }
+    else {
+      background(0,0,255);
+ }
+  //Thomp movement. If he reaches the bottom canvas, he returns at a random position at the top.
   thomp.x = thomp.x + thomp.vx;
   thomp.y = thomp.y + thomp.vy;
 
@@ -87,52 +106,46 @@ function draw() {
     thomp.x = random(0, width);
   }
 
-  // user movement
+  // User movement is controlled by the position of the mouse.
   user.x = mouseX;
   user.y = mouseY;
 
-  //Action when thomp catches mario (user)
+  //Action when thomp catches the user. Everything freezes and the background turns into a  scary red color.
   let d = dist (thomp.x, thomp.y, user.x, user.y);
-  if (d < thomp.size/2 + user.size/3) {
+  if (d < thomp.size/1.5 + user.size/1.5) {
+    background(thomp.bg.r, thomp.bg.g, thomp.bg.b); // Red background
     noLoop();
-    background(255,0,0); // Red background
   }
 
-  // Action when user touches the coin.
+  // Action when user touches the coin. The user grabs the coin and is stuck with the coin until he brings it ito the tube.
   let dCoin = dist (coin.x, coin.y, user.x, user.y);
-  // let bg = {
-  //   r: random(0,255),
-  //   g: random(0,255),
-  //   b: random(0,255),
-  // }
-
-  if (dCoin < coin.size/2 + user.size/2 && mouseIsPressed) {
-    coin.x = mouseX;
-    coin.y = mouseY;
+    if (dCoin < coin.size/2 + user.size/2 && mouseIsPressed) {
+      coin.x = mouseX;
+      coin.y = mouseY;
+      background(coin.bg.r, coin.bg.g, coin.bg.b);
     }
 
-
-  // Action when coin touches the tube.
+  // Action when coin touches the tube. The coin is regenerated at a random position on the screen and the background flashes a green color.
   let dTube = dist (coin.x, coin.y, tube.x, tube.y);
   if (dTube < tube.size/2 + coin.size/2) {
-    coin.x = random(0, width);
-    coin.y = random(0, 700);
-    background(tube.bg.r, tube.bg.g, tube.bg.b);
+    coin.x = random(coin.min, coin.max);
+    coin.y = random(coin.min, coin.max);
+    tube.x = random (0,700);
+    background(tube.bg.r, tube.bg.g, tube.bg.b); // Green background
   }
 
-  // Displaying thomp character.
+  // Displaying the thomp character.
   imageMode(CENTER);
   image(thomp.image, thomp.x, thomp.y);
 
-  // Displaying coins.
-
+  // Displaying the coin falling from the sky.
   imageMode(CENTER);
   image(coin.image, coin.x, coin.y);
 
-  // Displaying tube
-    image(tube.image, tube.x, tube.y);
+  // Displaying the static tube.
+  image(tube.image, tube.x, tube.y);
 
-// Displaying user
+// Displaying the user with a Mario icon.
   imageMode(CENTER);
   image(user.image, user.x, user.y,50,50);
 }
