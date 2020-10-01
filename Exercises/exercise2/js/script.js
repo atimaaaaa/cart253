@@ -12,7 +12,7 @@ let thomp = {
    size:100,
    vx:0,
    vy:0,
-   speed: 5,
+   speed: 10,
    image: undefined,
    bg: {
      r:255,
@@ -148,5 +148,5 @@ function draw() {
 
 // Displaying the user with a Mario icon.
   imageMode(CENTER);
-  image(user.image, user.x, user.y,50,50);
+  image(user.image, user.x, user.y,70,80);
 }
