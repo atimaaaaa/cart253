@@ -1,20 +1,20 @@
-function setup(){
+function setup() {
   createCanvas(500,500);
 }
 
-function draw(){
+function draw() {
   background(0);
 
-  parallels(100,300,30,100,3,5);
-  parallels(300,300,30,100,3,5);
+  let color = randomColor();
+  //fill(color.r, color.g, color.b);
+  ellipse(250,250,100,100);
 }
 
-function parallels(x,y,numLines,lineWidth,lineHeight,lineSpacing){
-  for(let i = 0; i < numLines; i++){
-    noStroke();
-    fill(255);
-    rectMode(CENTER);
-    rect(x,y,lineWidth,lineHeight);
-    y = y + lineSpacing;
+function randomColor() {
+  let result = {
+    r: random(0,255),
+    g: random(0,255),
+    b: random(0,255)
   }
+  return result;
 }
