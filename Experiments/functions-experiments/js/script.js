@@ -1,29 +1,64 @@
+
+
+let circle= {
+  x:0,
+  y:250,
+  size:100,
+  vx:0,
+  vy:0,
+  speed: 2
+};
+
+let state = `title`; // title, animation, ending
+
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(500,500);
+  circle.vx = circle.speed;
+  textSize(32);
+  textAlign(CENTER, CENTER);
 }
 
 function draw() {
-  background(127);
+  background(0);
 
-  textAlign(CENTER, CENTER);
-  // Make the font size respond to the mouse
-  let size = map(mouseX, 0, width, 12, 128);
-  textSize(size);
-  textStyle(BOLD);
+    if (state === `title`) {
+      title();
+     }
+     else if (state === `animation`) {
+       animation();
+     }
+     else if (state === `ending`) {
+        ending();
+     }
+}
 
-  // Make the fill respond to the mouse
-  let red = map(mouseX, 0, width, 100, 200);
-  let green = map(mouseY, 0, height, 100, 200);
-  let blue = map(mouseX + mouseY, 0, width + height, 100, 200);
-  fill(red, green, blue);
 
-  // Make the stroke color respond to the mouse
-  let strokeShade = map(mouseX, 0, width, 0, 255);
-  stroke(strokeShade);
+function title() {
+  // title
+   fill(255);
+   text(`hello, world!`, width/2, height/2);
+}
 
-  // Make the stroke weight respond to the mouse
-  let weight = map(mouseY, 0, height, 0, 40);
-  strokeWeight(weight);
+function animation() {
+  // Animation
+  circle.x = circle.x + circle.vx;
+  circle.y = circle.y + circle.vy;
 
-  text(`Hello, World!`, 250, 250);
+  if (circle.x > width) {
+    state = `ending`;
+  }
+
+  ellipse(circle.x, circle.y, circle.size);
+}
+
+function ending(){
+  //Ending
+  fill(120);
+  text(`Life is hard`, 250, 250);
+}
+
+function keyPressed(){
+  if (state === `title`){
+    state = `animation`;
+  }
 }
