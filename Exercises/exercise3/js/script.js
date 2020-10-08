@@ -1,5 +1,5 @@
 /**************************************************
-Activity 5: Looking for love
+Exercise 3: Looking for love
 Atima Ng
 
 This is a program to help Ness find love. Control his movements by pressing the arrow keys. There might be a special bonus if you press down the space bar!
