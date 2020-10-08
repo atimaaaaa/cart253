@@ -14,25 +14,43 @@ let ness = {
   size:100,
   vx:0,
   vy:0,
-  speed:5
+  speed:5,
+  image: undefined
 };
 
 let paula = {
   x: 500,
   y: 300,
-  size:100,
+  size: 100,
   vx:0,
   vy:0,
-  speed:2
+  speed:2,
+  image: undefined
 };
 
-let state =  `title`; // Possible states include title, love, no love and simulation.
+let lucas = {
+  x: 500,
+  y: 300,
+  size: 100,
+  vx:0,
+  vy:0,
+  speed:2,
+  image: undefined
+};
+
+let state =  `title`; // Possible states include title, love, no love, alternativeLove and simulation.
+
+function preload(){
+  ness.image = loadImage("assets/images/ness.png");
+  paula.image = loadImage("assets/images/paula.png");
+  lucas.image = loadImage("assets/images/lucas.png");
+}
 
 function setup() {
   createCanvas(1000,500);
-
   textSize(64);
   textAlign(CENTER,CENTER);
+
   //Paula speed
   paula.vx = random(-paula.speed, paula.speed);
 }
@@ -49,11 +67,20 @@ function draw() {
   else if (state === `simulation`) {
     simulation();
   }
-  else if (state ===  `love`){
+  else if (state ===  `love`) {
     love();
   }
-  else if (state === `noLove`)
+  else if (state === `noLove`) {
     noLove();
+  }
+  else if (state ===`alternativeLove`) {
+    gayLove();
+  }
+
+// Press space to make Paula run away.
+  if (keyIsDown(32)) {
+    paula.vx = paula.vx + 0.2 ;
+  }
 }
 
 function title() {
@@ -68,6 +95,7 @@ function simulation(){
     checkOffScreen();
     checkOverlap();
     display();
+    alternativeOverlap();
 }
 
 function love(){
@@ -81,6 +109,13 @@ function noLove(){
   push();
   fill(0,50,255);
   text(`NO LOVE EXISTS`, width/2, height/2);
+  pop();
+}
+
+function gayLove(){
+  push();
+  fill(0,255,0);
+  text(`ALL LOVE EXISTS`, width/2, height/2);
   pop();
 }
 
@@ -124,9 +159,18 @@ function checkOverlap(){
     }
 }
 
+function alternativeOverlap(){
+  // Check if Ness and Paula are overlapping and fall in LOVE.
+  let d = dist(ness.x, ness.y, lucas.x, lucas.y);
+    if(d < ness.size/2 + lucas.size/2){
+      state = `alternativeLove`;
+    }
+}
+
 function display(){
     // Display Ness and Paula
-    ellipse(ness.x, ness.y, ness.size);
-    ellipse(paula.x, paula.y, paula.size);
-
+    imageMode(CENTER);
+    image(ness.image, ness.x, ness.y, ness.size);
+    image(paula.image, paula.x, paula.y, 140,140);
+    image(lucas.image, lucas.x, lucas.y, 100,140);
 }
