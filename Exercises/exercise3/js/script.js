@@ -1,13 +1,10 @@
 /**************************************************
-Template p5 project
-Pippin Barr
+Activity 5: Looking for love
+Atima Ng
 
-Here is a description of this template p5 project.
+This is a program to help Ness find love. Control his movements by pressing the arrow keys. There might be a special bonus if you press down the space bar!
 **************************************************/
 
-// setup()
-//
-// Description of setup() goes here.
 let ness = {
   x: 100,
   y: 300,
@@ -29,35 +26,63 @@ let paula = {
 };
 
 let lucas = {
-  x: 500,
+  x: 700,
   y: 300,
   size: 100,
   vx:0,
   vy:0,
-  speed:2,
+  speed:1,
+  acceleration: 0.05,
   image: undefined
+};
+
+let grass = {
+  x: 0,
+  y: 370,
+  width: 1000,
+  height:200,
+  fill : {
+    r:0,
+    g:255,
+    b:0,
+  }
 };
 
 let state =  `title`; // Possible states include title, love, no love, alternativeLove and simulation.
 
+// preload()
+//
+// This is where my images and fonts will be loading.
 function preload(){
   ness.image = loadImage("assets/images/ness.png");
   paula.image = loadImage("assets/images/paula.png");
   lucas.image = loadImage("assets/images/lucas.png");
+
+  myFont = loadFont('assets/font/twoson.ttf');
 }
 
+// setup()
+//
+// To create my canvas size and st initial states.
 function setup() {
   createCanvas(1000,500);
+  initial();
+}
+
+function initial() {
+  // Initial positions
+  paula.x = random(400,750);
+  ness.x = random(50,400);
+  paula.vx = random(-paula.speed, paula.speed);
+
+  textFont(myFont);
   textSize(64);
   textAlign(CENTER,CENTER);
-
-  //Paula speed
-  paula.vx = random(-paula.speed, paula.speed);
 }
 
 // draw()
 //
-// Description of draw() goes here.
+// The game is divided into 5 sections: title, simumlation, love, noLove and the surprise ending, alternativeLove.
 function draw() {
   background(0);
 
@@ -77,19 +102,30 @@ function draw() {
     gayLove();
   }
 
-// Press space to make Paula run away.
+// Press space to make Lucas attracted to you.
   if (keyIsDown(32)) {
-    paula.vx = paula.vx + 0.2 ;
+    let dx = lucas.x - ness.x;
+    if (dx < 0){
+      lucas.vx = lucas.speed + lucas.acceleration;
+    }
+    else if (dx > 0) {
+      lucas.vx = -lucas.speed - lucas.acceleration;
+    }
   }
 }
-
+ // Title sequence
 function title() {
   push();
   fill(255,0,0);
-  text(`LoveBound`, width/2, height/2);
+  text(`LoveBound`, width/2, height/2 -40);
+  fill(255);
+  textSize(25);
+  text(`Help Ness find true love! Navigate with the`, width/2, 330);
+  text(`left and right arrows. Good luck!`, width/2, 360);
   pop();
 }
 
+// Main simulation for the game
 function simulation(){
     movement();
     checkOffScreen();
@@ -98,6 +134,7 @@ function simulation(){
     alternativeOverlap();
 }
 
+// Act when Ness finds love
 function love(){
   push();
   fill(255,50,50);
@@ -105,6 +142,7 @@ function love(){
   pop();
 }
 
+// Act when Ness does not find love
 function noLove(){
   push();
   fill(0,50,255);
@@ -112,6 +150,7 @@ function noLove(){
   pop();
 }
 
+// Act when Ness finds love with Lucas
 function gayLove(){
   push();
   fill(0,255,0);
@@ -120,6 +159,7 @@ function gayLove(){
 }
 
 function mousePressed(){
+  // `Title` state to `simulation`
   if (state ===`title`){
     state = `simulation`;
   }
@@ -142,6 +182,9 @@ function movement() {
 
   paula.x = paula.x + paula.vx;
   paula.y = paula.y + paula.vy;
+
+  lucas.x = lucas.x + lucas.vx;
+  lucas.y = lucas.y + lucas.vy;
 }
 
 function checkOffScreen() {
@@ -162,15 +205,20 @@ function checkOverlap(){
 function alternativeOverlap(){
   // Check if Ness and Paula are overlapping and fall in LOVE.
   let d = dist(ness.x, ness.y, lucas.x, lucas.y);
-    if(d < ness.size/2 + lucas.size/2){
-      state = `alternativeLove`;
-    }
+  if(d < ness.size/2 + lucas.size/2){
+    background(255,0,0);
+    state = `alternativeLove`;
+
+  }
 }
 
 function display(){
-    // Display Ness and Paula
+    // Display Ness and Paula and Lucas
     imageMode(CENTER);
     image(ness.image, ness.x, ness.y, ness.size);
     image(paula.image, paula.x, paula.y, 140,140);
     image(lucas.image, lucas.x, lucas.y, 100,140);
+
+    rect(grass.x, grass.y, grass.width, grass.height);
+    fill(grass.fill.r, grass.fill.g, grass.fill.b);
 }
