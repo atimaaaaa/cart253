@@ -1,0 +1,59 @@
+/* Upload from @import google font. Top */@import url('https://fonts.googleapis.com/css2?family=Piazzolla:wght@300;600&display=swap');
+* {
+  margin:0;
+  padding:0;
+  box-sizing: border-box; /* Everything fits inside window width. When appling border or padding, nothing extends outside window width*/
+}
+
+body {
+  font-size: 16px;
+}
+
+section.header_lrg {
+  background-color: #333;
+  color: #fff;
+  width: 100%;
+  height: 50vh;
+  display: flex; /* Displays inside flexbox*/
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.header_lrg header {
+  border: 1px solid red;
+  text-align: center; /* aligns the text inside box*/
+}
+
+.header_lrg h2 {
+	font-family: 'Piazzolla', serif;
+	font-size:2em; /* Defaut was selected from body tag (aka 16px.)  */
+	line-height:1em;
+	text-transform: capitalize;
+	color:#eee;
+	font-weight: normal; /* Headers artificially have bold applied. */
+}
+
+.header_lrg h1 {
+	font-family: 'Piazzolla', serif;
+	font-size:5em;
+	text-transform:uppercase;
+	font-weight:normal;
+}
+
+section.right {
+  background:#ff2a06;
+  width: 100%; /* not recommended vw cause includes scroll bar. */
+  min-height: 70vh;
+  padding: 2%;
+
+  display: flex; /* when you flex the parent children will stretch */
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.right article {
+  background: white;
+  width: 30%;
+  padding: 1.5em;
+
+}

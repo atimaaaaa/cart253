@@ -137,6 +137,7 @@ function simulation(){
 // Act when Ness finds love
 function love(){
   push();
+  background(255,192,203);
   fill(255,50,50);
   text(`LOVE EXISTS`, width/2, height/2);
   pop();
@@ -153,6 +154,7 @@ function noLove(){
 // Act when Ness finds love with Lucas
 function gayLove(){
   push();
+  background(252,255,164);
   fill(0,255,0);
   text(`ALL LOVE EXISTS`, width/2, height/2);
   pop();
@@ -206,19 +208,19 @@ function alternativeOverlap(){
   // Check if Ness and Paula are overlapping and fall in LOVE.
   let d = dist(ness.x, ness.y, lucas.x, lucas.y);
   if(d < ness.size/2 + lucas.size/2){
-    background(255,0,0);
     state = `alternativeLove`;
-
   }
 }
 
 function display(){
     // Display Ness and Paula and Lucas
+    background(224,255,255);
+    noStroke();
+    rect(grass.x, grass.y, grass.width, grass.height);
+    fill(grass.fill.r, grass.fill.g, grass.fill.b);
+
     imageMode(CENTER);
     image(ness.image, ness.x, ness.y, ness.size);
     image(paula.image, paula.x, paula.y, 140,140);
     image(lucas.image, lucas.x, lucas.y, 100,140);
-
-    rect(grass.x, grass.y, grass.width, grass.height);
-    fill(grass.fill.r, grass.fill.g, grass.fill.b);
 }

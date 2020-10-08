@@ -94,6 +94,7 @@ function sadness(){
   push();
   fill(0,10,250);
   text(`D:`, 250, 250);
+  background(255,0,0);
   pop();
 }
 
