@@ -15,10 +15,11 @@ let base = {
 let cat1 = {
   x: 0,
   y: -100,
-  size:100,
+  size:150,
   vx:0,
   vy: 2,
-  caught: false
+  caught: false,
+  image: undefined
 }
 
 let cat2 = {
@@ -27,7 +28,8 @@ let cat2 = {
   size:100,
   vx:0,
   vy: 2,
-  caught: false
+  caught: false,
+  image: undefined
 }
 
 let cat3 = {
@@ -36,7 +38,8 @@ let cat3 = {
   size:100,
   vx:0,
   vy: 2,
-  caught: false
+  caught: false,
+  image: undefined
 }
 
 let cat4 = {
@@ -45,7 +48,8 @@ let cat4 = {
   size:100,
   vx:0,
   vy: 2,
-  caught: false
+  caught: false,
+  image: undefined
 }
 
 let cat5 = {
@@ -54,12 +58,25 @@ let cat5 = {
   size:100,
   vx:0,
   vy: 2,
-  caught: false
+  caught: false,
+  image: undefined
+}
+
+let bg = {
+  fill: {
+    r:0,
+    g:255,
+    b:0
+  }
 }
 
 let state = `title`; // Possible states: 'title', 'simulation', 'happy ending' and 'sad ending'.
 
 let catcher = base;
+
+function preload() {
+  cat1.image = loadImage("assets/images/catHappy_v2.png");
+}
 
 // setup()
 //
@@ -83,8 +100,6 @@ function initial() {
 // Description of draw() goes here.
 function draw() {
   background(0);
-
-  base.x = mouseX;
 
   catsMoving();
   catsOverlap();
@@ -129,9 +144,13 @@ function checkCatch(cat) {
 
 function display(){
   // Display base and cats.
+  base.x = mouseX;
+
+  background(bg.fill.r, bg.fill.g, bg.fill.b);
+
   ellipse(base.x, base.y, base.size);
-  ellipse(cat1.x, cat1.y, cat1.size);
-  ellipse(cat2.x, cat2.y, cat2.size);
+  imageMode(CENTER)
+  image(cat1.image, cat1.x, cat1.y, cat1.size);
   ellipse(cat3.x, cat3.y, cat3.size);
   ellipse(cat4.x, cat4.y, cat4.size);
   ellipse(cat5.x, cat5.y, cat5.size);
