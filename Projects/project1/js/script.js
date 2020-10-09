@@ -57,6 +57,8 @@ let cat5 = {
   caught: false
 }
 
+let state = `title`; // Possible states: 'title', 'simulation', 'happy ending' and 'sad ending'.
+
 let catcher = base;
 
 // setup()
@@ -64,6 +66,10 @@ let catcher = base;
 // Description of setup() goes here.
 function setup() {
   createCanvas(1000,1000);
+  initial();
+}
+
+function initial() {
   base.y = height - 200;
   cat1.x = random(50,width - 50);
   cat2.x = random(50,width - 50);
