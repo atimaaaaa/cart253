@@ -11,7 +11,7 @@ Here is a description of this template p5 project.
 let music;
 
 let clownImage = {
-  x: -600,
+  x: -400,
   y: 350,
   vx: 2,
   vy: 0,
@@ -25,7 +25,6 @@ let bg = {
   b:0
 }
 
-let state = `title`;
 
 function preload() {
   music = loadSound(`assets/sounds/Never Gonna Give You Up Original.mp3`);
@@ -42,30 +41,20 @@ function setup() {
 
 function draw() {
   background(0);
-
-  if(mousePressed() || keyPressed()) {
-    clownMovement();
-  }
-
-
+  clownMovement();
 }
 
 
 function mousePressed() {
-
-
   tryMusic();
   bgFlashing();
-  clownMovement()
+  clownMovement();
 }
 
 function keyPressed() {
-
-
   tryMusic();
   bgFlashing();
-  clownMovement()
-
+  clownMovement();
 }
 
 function tryMusic() {
