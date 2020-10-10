@@ -9,13 +9,15 @@ Here is a description of this template p5 project.
 let base = {
   x: 0,
   y: 0,
-  size: 100
+  sizeWidth: 200,
+  sizeHeight: 100
 }
 
 let cat1 = {
   x: 0,
   y: -100,
-  size:150,
+  sizeWidth:150,
+  sizeHeight: 100,
   vx:0,
   vy: 2,
   caught: false,
@@ -25,7 +27,8 @@ let cat1 = {
 let cat2 = {
   x: 0,
   y: -400,
-  size:100,
+  sizeWidth:150,
+  sizeHeight: 100,
   vx:0,
   vy: 2,
   caught: false,
@@ -35,7 +38,8 @@ let cat2 = {
 let cat3 = {
   x: 0,
   y: -900,
-  size:100,
+  sizeWidth:150,
+  sizeHeight: 100,
   vx:0,
   vy: 2,
   caught: false,
@@ -45,7 +49,8 @@ let cat3 = {
 let cat4 = {
   x: 0,
   y: -1100,
-  size:100,
+  sizeWidth:150,
+  sizeHeight: 100,
   vx:0,
   vy: 2,
   caught: false,
@@ -55,7 +60,8 @@ let cat4 = {
 let cat5 = {
   x: 0,
   y: -1300,
-  size:100,
+  sizeWidth:150,
+  sizeHeight: 100,
   vx:0,
   vy: 2,
   caught: false,
@@ -75,7 +81,12 @@ let state = `title`; // Possible states: 'title', 'simulation', 'happy ending' a
 let catcher = base;
 
 function preload() {
+  // Image source: https://www.pngfind.com/mpng/ixbiwiJ_kawaii-cute-cat-cat-playing-with-yarn-hd/
   cat1.image = loadImage("assets/images/catHappy_v2.png");
+  cat2.image = loadImage("assets/images/catHappy_v2.png");
+  cat3.image = loadImage("assets/images/catHappy_v2.png");
+  cat4.image = loadImage("assets/images/catHappy_v2.png");
+  cat5.image = loadImage("assets/images/catHappy_v2.png");
 }
 
 // setup()
@@ -135,7 +146,7 @@ function moveCat(cat) {
 function checkCatch(cat) {
  // Check if anything is touching. If cat touches the base, the cat sits on top of the base. If cat touches another cat, it will sit on top of the the initial cat.
   let d = dist(catcher.x, catcher.y, cat.x,cat.y);
-    if(!cat.caught && d < catcher.size / 2 + cat.size / 2) {
+    if(!cat.caught && d < catcher.sizeHeight / 2 + cat.sizeHeight / 2) {
       cat.vy = 0;
       cat.caught = true;
       catcher = cat;
@@ -148,10 +159,13 @@ function display(){
 
   background(bg.fill.r, bg.fill.g, bg.fill.b);
 
-  ellipse(base.x, base.y, base.size);
+  rectMode(CENTER);
+  rect(base.x, base.y, base.sizeWidth, base.sizeHeight);
+
   imageMode(CENTER)
-  image(cat1.image, cat1.x, cat1.y, cat1.size);
-  ellipse(cat3.x, cat3.y, cat3.size);
-  ellipse(cat4.x, cat4.y, cat4.size);
-  ellipse(cat5.x, cat5.y, cat5.size);
+  image(cat1.image, cat1.x, cat1.y, cat1.sizeWidth, cat1.sizeHeight);
+  image(cat2.image, cat2.x, cat2.y, cat2.sizeWidth, cat2.sizeHeight);
+  image(cat3.image, cat3.x, cat3.y, cat3.sizeWidth, cat3.sizeHeight);
+  image(cat4.image, cat4.x, cat4.y, cat4.sizeWidth, cat4.sizeHeight);
+  image(cat5.image, cat5.x, cat5.y, cat5.sizeWidth, cat5.sizeHeight);
 }
