@@ -6,17 +6,13 @@ Here is a description of this template p5 project.
 **************************************************/
 "use strict";
 
-let base = {
+let pillow = {
   x: 0,
   y: 0,
-  sizeWidth: 200,
-  sizeHeight: 100,
-  fill: {
-    r:230,
-    g: 173,
-    b: 216
-  }
-}
+  sizeWidth: 230,
+  sizeHeight: 60,
+  image: undefined
+};
 
 let cat1 = {
   x: 0,
@@ -103,6 +99,14 @@ let cloud3 = {
   image: undefined
 }
 
+let title = {
+  fill: {
+    r: 239,
+    g: 140,
+    b: 125
+  }
+}
+
 let bg = {
   fill: {
     r: 173,
@@ -113,10 +117,17 @@ let bg = {
 
 let state = `title`; // Possible states: 'title', 'simulation', 'happy ending' and 'sad ending'.
 
-let catcher = base;
+let titleFont;
+
+let catcher = pillow;
 
 function preload() {
-  // Image source: https://www.pngfind.com/mpng/ixbiwiJ_kawaii-cute-cat-cat-playing-with-yarn-hd/
+  // Cat image source: https://www.pngfind.com/mpng/ixbiwiJ_kawaii-cute-cat-cat-playing-with-yarn-hd/
+  // Pillow image source: https://www.freepik.com/premium-vector/colorful-pillow-pyramid-slide-cartoon-set-home-interior-textile-soft-color-square-pillow_7714773.htm#page=1&query=cushion&position=7
+
+  titleFont = loadFont("assets/typography/LuckiestGuy-Regular.ttf");
+
+  pillow.image = loadImage("assets/images/pillow.png");
   cat1.image = loadImage("assets/images/catHappy_v2.png");
   cat2.image = loadImage("assets/images/catHappy_v2.png");
   cat3.image = loadImage("assets/images/catHappy_v2.png");
@@ -129,14 +140,16 @@ function preload() {
 
 // setup()
 //
-// Description of setup() goes here.
+// Creating the canvas size as well as positioning the initial positions of the cats, clouds and thw pillow.
 function setup() {
   createCanvas(1000,1000);
   initial();
+
 }
 
 function initial() {
-  base.y = height - 200;
+  // Initial positions
+  pillow.y = height - 200;
   cat1.x = random(50,width - 50);
   cat2.x = random(50,width - 50);
   cat3.x = random(50,width - 50);
@@ -145,20 +158,123 @@ function initial() {
   cloud1.x = random(50,width - 50);
   cloud2.x = random(50,width - 50);
   cloud3.x = random(50,width - 50);
+
+// Initial typography
+  textAlign(CENTER,CENTER);
+  textSize(30);
+  fill(title.fill.r, title.fill.g, title.fill.b);
+  textFont(titleFont);
 }
 
 // draw()
 //
-// Description of draw() goes here.
+// This section will display the clouds, cats and pillow (the catcher). When the cats overlap with the pillow and with each othher, they will stack up on top of the x position of the catcher. The clouds are in the background floating away.
 function draw() {
   background(0);
 
+  if (state ===  `title`) {
+    titleScreen();
+  }
+
+  if (state ===  `instruction`) {
+    instructionScreen();
+  }
+
+  if (state === `simulation`) {
+    simulation();
+  }
+
+  if (state === `win`) {
+    win();
+  }
+
+  if (state ===  `lose`) {
+    lose();
+  }
+}
+
+function mousePressed() {
+  if (state === `title`) {
+    state = `instruction`;
+  }
+  else if (state === `instruction`) {
+    state = `simulation`;
+  }
+}
+
+
+function simulation() {
   catsMoving();
   catsOverlap();
   cloudsMovement();
+  noStackCats();
+  stackCats();
   display();
 }
 
+function titleScreen() {
+  push();
+  background(121, 144, 247);
+  textAlign(CENTER,CENTER);
+  textSize(220);
+  textFont(titleFont);
+  text(`CATcher`, width / 2, height / 3);
+  pop();
+
+  push();
+  fill(255);
+  text(`Click anywhere to continue`, width / 2, height - 300);
+  pop();
+}
+
+function instructionScreen() {
+  push();
+  background(121, 144, 247);
+  fill(255);
+
+  text(`There is a catastrophy
+  Cats are falling from the sky
+  and they need to be protected at all cost`, width / 2, height / 3);
+  pop();
+
+  push();
+  fill(title.fill.r, title.fill.g, title.fill.b);
+  text(`Control the safety pillow with the mouse.
+    Catch all cats to win!`, width / 2, height -300);
+  pop();
+}
+
+function win() {
+  push();
+  background(121, 144, 247);
+  textAlign(CENTER,CENTER);
+  textSize(64);
+
+  text(`WINNER :)`, 500, 500);
+  pop();
+}
+
+function lose() {
+  push();
+  background(121, 144, 247);
+  text(`LOSER :(`, width / 2, height / 2);
+  pop();
+}
+
+// User wins when the fifth cat is stacked.
+function stackCats() {
+  if (cat4.x === cat5.x && !cat3.x===cat5.x && !cat2.x===cat5.x && !cat1.x===cat5.x) {
+    state = `win`;
+  }
+}
+
+function noStackCats() {
+  if (cat1.x === cat5.x || cat2.x === cat5.x || cat3.x === cat5.x || pillow.x === cat5.x || cat5.y > height) {
+    state = `lose`;
+  }
+}
+
+// Movement of the cats
 function catsMoving() {
   moveCat(cat1);
   moveCat(cat2);
@@ -167,6 +283,7 @@ function catsMoving() {
   moveCat(cat5);
 }
 
+// Checking which cats overlap
 function catsOverlap() {
   checkCatch(cat1);
   checkCatch(cat2);
@@ -178,7 +295,7 @@ function catsOverlap() {
 function moveCat(cat) {
   // Movement of cats falling down.
   if (cat.caught) {
-    cat.x = base.x;
+    cat.x = pillow.x;
   }
   else {
     cat.y = cat.y + cat.vy;
@@ -188,19 +305,21 @@ function moveCat(cat) {
 function checkCatch(cat) {
  // Check if anything is touching. If cat touches the base, the cat sits on top of the base. If cat touches another cat, it will sit on top of the the initial cat.
   let d = dist(catcher.x, catcher.y, cat.x,cat.y);
-    if(!cat.caught && d < catcher.sizeHeight / 2 + cat.sizeHeight / 2) {
+    if(!cat.caught && d < catcher.sizeHeight / 3 + cat.sizeHeight / 2) {
       cat.vy = 0;
       cat.caught = true;
       catcher = cat;
     }
   }
 
+// Which clouds are moving.
 function cloudsMovement() {
   cloudsFloating(cloud1);
   cloudsFloating(cloud2);
   cloudsFloating(cloud3);
 }
 
+// Movement of the clouds.
 function cloudsFloating(cloud) {
   cloud.x = cloud.x + cloud.vx;
 
@@ -212,10 +331,10 @@ function cloudsFloating(cloud) {
 
 function display(){
   // Display base and cats.
-  base.x = mouseX;
+  pillow.x = mouseX;
   noStroke();
 
-  //  Sky blue background
+  // Sky blue background
   background(bg.fill.r, bg.fill.g, bg.fill.b);
 
   // Display clouds
@@ -224,10 +343,9 @@ function display(){
   image(cloud2.image, cloud2.x, cloud2.y, cloud2.sizeWidth, cloud2.sizeHeight);
   image(cloud3.image, cloud3.x, cloud3.y, cloud3.sizeWidth, cloud3.sizeHeight);
 
-  // Display base
+  // Display pillow
   rectMode(CENTER);
-  rect(base.x, base.y, base.sizeWidth, base.sizeHeight);
-  fill(base.fill.r,base.fill.g,base.fill.b);
+  image(pillow.image, pillow.x, pillow.y, pillow.sizeWidth, pillow.sizeHeight);
 
   // Display cats
   imageMode(CENTER)
