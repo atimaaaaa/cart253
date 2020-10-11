@@ -48,13 +48,13 @@ function draw() {
 function mousePressed() {
   tryMusic();
   bgFlashing();
-  clownMovement();
+  
 }
 
 function keyPressed() {
   tryMusic();
   bgFlashing();
-  clownMovement();
+
 }
 
 function tryMusic() {

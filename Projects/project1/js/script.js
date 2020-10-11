@@ -10,7 +10,12 @@ let base = {
   x: 0,
   y: 0,
   sizeWidth: 200,
-  sizeHeight: 100
+  sizeHeight: 100,
+  fill: {
+    r:230,
+    g: 173,
+    b: 216
+  }
 }
 
 let cat1 = {
@@ -68,11 +73,41 @@ let cat5 = {
   image: undefined
 }
 
+let cloud1 = {
+  x: 0,
+  y: 200,
+  sizeWidth: 180,
+  sizeHeight: 120,
+  vx:1,
+  vy:0,
+  image: undefined
+}
+
+let cloud2 = {
+  x: 0,
+  y: 600,
+  sizeWidth: 250,
+  sizeHeight: 180,
+  vx: 1.5,
+  vy:0,
+  image: undefined
+}
+
+let cloud3 = {
+  x: 0,
+  y: 300,
+  sizeWidth: 300,
+  sizeHeight: 220,
+  vx: 1,
+  vy:0,
+  image: undefined
+}
+
 let bg = {
   fill: {
-    r:0,
-    g:255,
-    b:0
+    r: 173,
+    g: 216,
+    b: 230
   }
 }
 
@@ -87,6 +122,9 @@ function preload() {
   cat3.image = loadImage("assets/images/catHappy_v2.png");
   cat4.image = loadImage("assets/images/catHappy_v2.png");
   cat5.image = loadImage("assets/images/catHappy_v2.png");
+  cloud1.image = loadImage("assets/images/cloud.png");
+  cloud2.image = loadImage("assets/images/cloud.png");
+  cloud3.image = loadImage("assets/images/cloud.png");
 }
 
 // setup()
@@ -104,6 +142,9 @@ function initial() {
   cat3.x = random(50,width - 50);
   cat4.x = random(50,width - 50);
   cat5.x = random(50,width - 50);
+  cloud1.x = random(50,width - 50);
+  cloud2.x = random(50,width - 50);
+  cloud3.x = random(50,width - 50);
 }
 
 // draw()
@@ -114,6 +155,7 @@ function draw() {
 
   catsMoving();
   catsOverlap();
+  cloudsMovement();
   display();
 }
 
@@ -153,15 +195,41 @@ function checkCatch(cat) {
     }
   }
 
+function cloudsMovement() {
+  cloudsFloating(cloud1);
+  cloudsFloating(cloud2);
+  cloudsFloating(cloud3);
+}
+
+function cloudsFloating(cloud) {
+  cloud.x = cloud.x + cloud.vx;
+
+  if (cloud.x > width) {
+    cloud.x = 0;
+    cloud.y = random(0,height-300);
+  }
+}
+
 function display(){
   // Display base and cats.
   base.x = mouseX;
+  noStroke();
 
+  //  Sky blue background
   background(bg.fill.r, bg.fill.g, bg.fill.b);
 
+  // Display clouds
+  imageMode(CENTER)
+  image(cloud1.image, cloud1.x, cloud1.y, cloud1.sizeWidth, cloud1.sizeHeight);
+  image(cloud2.image, cloud2.x, cloud2.y, cloud2.sizeWidth, cloud2.sizeHeight);
+  image(cloud3.image, cloud3.x, cloud3.y, cloud3.sizeWidth, cloud3.sizeHeight);
+
+  // Display base
   rectMode(CENTER);
   rect(base.x, base.y, base.sizeWidth, base.sizeHeight);
+  fill(base.fill.r,base.fill.g,base.fill.b);
 
+  // Display cats
   imageMode(CENTER)
   image(cat1.image, cat1.x, cat1.y, cat1.sizeWidth, cat1.sizeHeight);
   image(cat2.image, cat2.x, cat2.y, cat2.sizeWidth, cat2.sizeHeight);
