@@ -115,11 +115,11 @@ let bg = {
   }
 }
 
+let catcher = pillow;
+
 let state = `title`; // Possible states: 'title', 'simulation', 'happy ending' and 'sad ending'.
 
 let titleFont;
-
-let catcher = pillow;
 
 function preload() {
   // Cat image source: https://www.pngfind.com/mpng/ixbiwiJ_kawaii-cute-cat-cat-playing-with-yarn-hd/
@@ -162,7 +162,7 @@ function initial() {
 // Initial typography
   textAlign(CENTER,CENTER);
   textSize(30);
-  fill(title.fill.r, title.fill.g, title.fill.b);
+  fill(255);
   textFont(titleFont);
 }
 
@@ -175,19 +175,15 @@ function draw() {
   if (state ===  `title`) {
     titleScreen();
   }
-
   if (state ===  `instruction`) {
     instructionScreen();
   }
-
   if (state === `simulation`) {
     simulation();
   }
-
   if (state === `win`) {
     win();
   }
-
   if (state ===  `lose`) {
     lose();
   }
@@ -197,11 +193,10 @@ function mousePressed() {
   if (state === `title`) {
     state = `instruction`;
   }
-  else if (state === `instruction`) {
+  else if (state === `instruction` || state === `win` || state === `lose` ) {
     state = `simulation`;
   }
 }
-
 
 function simulation() {
   catsMoving();
@@ -215,14 +210,13 @@ function simulation() {
 function titleScreen() {
   push();
   background(121, 144, 247);
-  textAlign(CENTER,CENTER);
+  fill(title.fill.r, title.fill.g, title.fill.b);
   textSize(220);
-  textFont(titleFont);
   text(`CATcher`, width / 2, height / 3);
   pop();
 
   push();
-  fill(255);
+
   text(`Click anywhere to continue`, width / 2, height - 300);
   pop();
 }
@@ -230,15 +224,14 @@ function titleScreen() {
 function instructionScreen() {
   push();
   background(121, 144, 247);
-  fill(255);
-
+  fill(title.fill.r, title.fill.g, title.fill.b);
   text(`There is a catastrophy
   Cats are falling from the sky
   and they need to be protected at all cost`, width / 2, height / 3);
   pop();
 
   push();
-  fill(title.fill.r, title.fill.g, title.fill.b);
+  fill(255);
   text(`Control the safety pillow with the mouse.
     Catch all cats to win!`, width / 2, height -300);
   pop();
@@ -251,6 +244,7 @@ function win() {
   textSize(64);
 
   text(`WINNER :)`, 500, 500);
+  text(`Press anywhere to restart`, width / 2, height - 300);
   pop();
 }
 
@@ -259,6 +253,10 @@ function lose() {
   background(121, 144, 247);
   text(`LOSER :(`, width / 2, height / 2);
   pop();
+
+  fill(255);
+  text(`Press anywhere to restart`, width / 2, height - 300);
+
 }
 
 // User wins when the fifth cat is stacked.
