@@ -261,7 +261,7 @@ function lose() {
 
 // User wins when the fifth cat is stacked.
 function stackCats() {
-  if (cat4.x === cat5.x && !cat3.x===cat5.x && !cat2.x===cat5.x && !cat1.x===cat5.x) {
+  if (cat4.x === cat5.x ) {
     state = `win`;
   }
 }
