@@ -273,7 +273,7 @@ function lose() {
 
   push();
   fill(255);
-  text(`You did not catch all the cats
+  text(`You did not bring all the cats
     to safety. Try again!`, width / 2, height - 300);
   pop();
   pop();
