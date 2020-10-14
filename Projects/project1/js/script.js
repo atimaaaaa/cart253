@@ -65,7 +65,7 @@ let cat4 = {
 
 let cat5 = {
   x: 0,
-  y: -1400,
+  y: -1500,
   sizeWidth: 150,
   sizeHeight: 100,
   vx: 0,
