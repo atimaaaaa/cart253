@@ -58,7 +58,7 @@ let cat4 = {
   sizeWidth: 150,
   sizeHeight: 100,
   vx: 0,
-  vy: 1.7,
+  vy: 2,
   caught: false,
   image: undefined
 }
@@ -160,11 +160,11 @@ function setup() {
 function initial() {
   // Initial positions
   pillow.y = height - 200;
-  cat1.x = random(50, width - 50);
-  cat2.x = random(50, width - 50);
-  cat3.x = random(50, width - 50);
-  cat4.x = random(50, width - 50);
-  cat5.x = random(50, width - 50);
+  cat1.x = random(100, width - 100);
+  cat2.x = random(100, width - 100);
+  cat3.x = random(100, width - 100);
+  cat4.x = random(100, width - 100);
+  cat5.x = random(100, width - 100);
   cloud1.x = random(50, width - 50);
   cloud2.x = random(50, width - 50);
   cloud3.x = random(50, width - 50);
