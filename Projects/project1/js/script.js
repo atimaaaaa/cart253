@@ -2,7 +2,12 @@
 Project 1: Catastrophy
 Atima Ng
 
-CATCHER is a simulation consisting of saving falling cats and bringing them to safety. These cats are falling at a random x position and the goal is to catch all five cats on the magical pillow. Will you be able to catch them all?
+CATCHER is a simulation consisting of saving falling cats and bringing them to safety. These cats are falling at a random x position and the goal is to catch all five cats on the magical pillow. If unsucessful, the cats will die and you will need to restart. Will you be able to catch them all?
+
+The images used are from these sources:
+Cat image : https://www.pngfind.com/mpng/ixbiwiJ_kawaii-cute-cat-cat-playing-with-yarn-hd/
+Pillow image : https://www.freepik.com/premium-vector/colorful-pillow-pyramid-slide-cartoon-set-home-interior-textile-soft-color-square-pillow_7714773.htm#page=1&query=cushion&position=7
+
 **************************************************/
 "use strict";
 
@@ -60,7 +65,7 @@ let cat4 = {
 
 let cat5 = {
   x: 0,
-  y: -1200,
+  y: -1400,
   sizeWidth: 150,
   sizeHeight: 100,
   vx: 0,
@@ -120,13 +125,16 @@ let state = `title`; // Possible states: 'title', 'simulation', 'happy ending' a
 let titleFont;
 let music;
 
+
+
+// preload()
+//
+// Loads all typography, music and images.
 function preload() {
-  // Cat image source: https://www.pngfind.com/mpng/ixbiwiJ_kawaii-cute-cat-cat-playing-with-yarn-hd/
-  // Pillow image source: https://www.freepik.com/premium-vector/colorful-pillow-pyramid-slide-cartoon-set-home-interior-textile-soft-color-square-pillow_7714773.htm#page=1&query=cushion&position=7
 
   titleFont = loadFont("assets/typography/LuckiestGuy-Regular.ttf");
 
-  music = loadSound(`assets/sounds/Stack Cats.mp3`);
+  music = loadSound(`assets/sounds/Stack_Cats.mp3`);
 
   pillow.image = loadImage("assets/images/pillow.png");
   cat1.image = loadImage("assets/images/catHappy_v2.png");
@@ -138,6 +146,8 @@ function preload() {
   cloud2.image = loadImage("assets/images/cloud.png");
   cloud3.image = loadImage("assets/images/cloud.png");
 }
+
+
 
 // setup()
 //
@@ -165,6 +175,8 @@ function initial() {
   fill(255);
   textFont(titleFont);
 }
+
+
 
 // draw()
 //
@@ -200,6 +212,7 @@ function mousePressed() {
   }
 }
 
+// Actions when the simulation is running
 function simulation() {
   catsMoving();
   catsOverlap();
@@ -209,6 +222,7 @@ function simulation() {
   display();
 }
 
+//The introduction screen explaining the game.
 function titleScreen() {
   push();
   background(121, 144, 247);
@@ -245,6 +259,11 @@ function win() {
   textSize(64);
   text(`WINNER :)`, 500, 500);
   pop();
+
+  push();
+  text(`You caught all the cats to safety.
+    Can you save them again?`, width / 2, height - 300);
+  pop();
 }
 
 function lose() {
@@ -254,7 +273,8 @@ function lose() {
 
   push();
   fill(255);
-  text(`try again!`, width / 2, height - 300);
+  text(`You did not catch all the cats
+    to safety. Try again!`, width / 2, height - 300);
   pop();
   pop();
 }
@@ -291,7 +311,7 @@ function catsOverlap() {
   checkCatch(cat5);
 }
 
-// Movement of cats falling down.
+// Movement of cats falling down. I am aware when you catch a cat on its side, the program registers as a successful catch.
 function moveCat(cat) {
   if (cat.caught) {
     cat.x = pillow.x;
@@ -301,8 +321,8 @@ function moveCat(cat) {
   }
 }
 
+// Check if anything is touching. If cat touches the base, the cat sits on top of the base. If cat touches another cat, it will sit on top of the the initial cat.
 function checkCatch(cat) {
-  // Check if anything is touching. If cat touches the base, the cat sits on top of the base. If cat touches another cat, it will sit on top of the the initial cat.
   let d = dist(catcher.x, catcher.y, cat.x, cat.y);
   if (!cat.caught && d < catcher.sizeHeight / 3 + cat.sizeHeight / 2) {
     cat.vy = 0;
@@ -328,13 +348,12 @@ function cloudsFloating(cloud) {
   }
 }
 
-function display() {
   // Display base and cats.
+function display() {
   pillow.x = mouseX;
   noStroke();
 
-  // Sky blue background
-  background(bg.fill.r, bg.fill.g, bg.fill.b);
+  background(bg.fill.r, bg.fill.g, bg.fill.b); // Sky blue background
 
   // Display clouds
   imageMode(CENTER)
