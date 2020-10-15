@@ -281,12 +281,12 @@ function win() {
   background(121, 144, 247);
   textAlign(CENTER, CENTER);
   textSize(64);
-  text(`WINNER :)`, 500, 500);
+  text(`YOU WIN!`, 500, 500);
   pop();
 
   push();
   text(`You caught all the cats to safety.
-    Press the mouse to save again.`, width / 2, height - 300);
+    Press the mouse to save the cats once again!`, width / 2, height - 300);
   pop();
 }
 
@@ -294,7 +294,7 @@ function win() {
 function lose() {
   push();
   background(121, 144, 247);
-  text(`LOSER :(`, width / 2, height / 2);
+  text(`YOU LOSE!`, width / 2, height / 2);
 
   fill(255);
   text(`You did not bring all the cats to safety.
@@ -303,21 +303,21 @@ function lose() {
 
 }
 
-// User wins when the fifth cat is stacked.
+// If fifth cat lands on the fourth cat, the user wins and is redirected to the win screen.
 function stackCats() {
   if (cat4.x === cat5.x && !(cat4.x !== cat3.x)) {
     state = `win`;
   }
 }
 
-//How the user loses.
+// If the user does not catch all five cats, they are redirected to the lose screen.
 function noStackCats() {
   if (cat1.y > height || cat2.y > height || cat3.y > height || cat4.y > height || cat5.y > height) {
     state = `lose`;
   }
 }
 
-// Movement of the cats
+// Movement of the five cats
 function catsMoving() {
   moveCat(cat1);
   moveCat(cat2);
@@ -335,7 +335,7 @@ function catsOverlap() {
   checkCatch(cat5);
 }
 
-// Movement of cats falling down. I am aware when you catch a cat on its side, the program registers as a successful catch.
+// When a cat is caught, they are stacked on the pillow (user) and the cat becomes the catcher. I am aware when you catch a cat on its side, the program registers as a successful catch.
 function moveCat(cat) {
   if (cat.caught) {
     cat.x = pillow.x;
@@ -355,6 +355,7 @@ function checkCatch(cat) {
   }
 }
 
+// Cats meowing sound effect.
 function meowSounds() {
   if (state === `simulation`) {
     meowSFX.play();
@@ -378,8 +379,9 @@ function cloudsFloating(cloud) {
   }
 }
 
-// Display base and cats.
+// Display images of the pillow, cats ad clouds.
 function display() {
+  // The user controls the pillow by moving the mouse.
   pillow.x = mouseX;
   noStroke();
 
