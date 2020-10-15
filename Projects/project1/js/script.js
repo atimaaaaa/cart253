@@ -21,6 +21,7 @@ let pillow = {
 };
 
 // Variables for the initial position for the five falling cats.
+// Initial position for cat 1.
 let cat1 = {
   x: 0,
   y: -100,
@@ -30,8 +31,9 @@ let cat1 = {
   vy: 2,
   caught: false,
   image: undefined
-}
+};
 
+// Initial position for cat 2.
 let cat2 = {
   x: 0,
   y: -400,
@@ -41,8 +43,9 @@ let cat2 = {
   vy: 2,
   caught: false,
   image: undefined
-}
+};
 
+// Initial position for cat 3.
 let cat3 = {
   x: 0,
   y: -900,
@@ -52,8 +55,9 @@ let cat3 = {
   vy: 2,
   caught: false,
   image: undefined
-}
+};
 
+// Initial position for cat 4.
 let cat4 = {
   x: 0,
   y: -1100,
@@ -63,8 +67,9 @@ let cat4 = {
   vy: 2,
   caught: false,
   image: undefined
-}
+};
 
+// Initial position for cat 5.
 let cat5 = {
   x: 0,
   y: -1500,
@@ -74,9 +79,10 @@ let cat5 = {
   vy: 2,
   caught: false,
   image: undefined
-}
+};
 
 // Variables for the initial position for the clouds. They float from left to right.
+// Initial position for cloud 1.
 let cloud1 = {
   x: 0,
   y: 200,
@@ -85,8 +91,9 @@ let cloud1 = {
   vx: 1,
   vy: 0,
   image: undefined
-}
+};
 
+// Initial position for cloud 2.
 let cloud2 = {
   x: 0,
   y: 600,
@@ -95,8 +102,9 @@ let cloud2 = {
   vx: 1.5,
   vy: 0,
   image: undefined
-}
+};
 
+// Initial position for cloud 3.
 let cloud3 = {
   x: 0,
   y: 300,
@@ -105,7 +113,7 @@ let cloud3 = {
   vx: 1,
   vy: 0,
   image: undefined
-}
+};
 
 // Initial color for the title typography.
 let title = {
@@ -114,7 +122,7 @@ let title = {
     g: 140,
     b: 125
   }
-}
+};
 
 // Background color for the title, instruction and ending screen.
 let bg = {
@@ -123,7 +131,7 @@ let bg = {
     g: 216,
     b: 230
   }
-}
+};
 
 let catcher = pillow; // initially, the pillow will be the catcher.
 let state = `title`; // Possible states: 'title', 'simulation', 'happy ending' and 'sad ending'.
@@ -133,7 +141,7 @@ let meowSFX; // Declaring the cat meowing sound effect music variable.
 
 // preload()
 //
-// Loads all typography, music and images.
+// Loads all typography, music and images before the program begins.
 function preload() {
 
   // Typography
@@ -157,7 +165,7 @@ function preload() {
 
 // setup()
 //
-// Creating the canvas size as well as positioning the initial positions of the cats, clouds and the pillow.
+// This is where the initial settup happens. The canvas is created and the initial setup takes place.
 function setup() {
   createCanvas(1000, 1000);
   initial();
@@ -165,19 +173,19 @@ function setup() {
 
 // Initial positions for the pillow, cats and clouds.
 function initial() {
-  // Pillow
+  // Pillow position
   pillow.y = height - 200;
-  // Cats
+  // Cats position
   cat1.x = random(100, width - 100);
   cat2.x = random(100, width - 100);
   cat3.x = random(100, width - 100);
   cat4.x = random(100, width - 100);
   cat5.x = random(100, width - 100);
-  // Clouds
+  // Clouds position
   cloud1.x = random(50, width - 50);
   cloud2.x = random(50, width - 50);
   cloud3.x = random(50, width - 50);
-  // Initial typography
+  // Initial typography position and typography settings.
   textAlign(CENTER, CENTER);
   textSize(30);
   fill(255);
@@ -231,17 +239,7 @@ function mousePressed() {
 
 // Function to reload the page.
 function reset() {
-  location.reload();
-}
-
-// Functions running when the simulation is running.
-function simulation() {
-  catsMoving();
-  catsOverlap();
-  cloudsMovement();
-  stackCats();
-  noStackCats();
-  display();
+  location.reload(); // Yes, this is a simple way to refresh the page, please forgive me for my laziness on this submission day hehe.
 }
 
 //The introduction screen.
@@ -300,21 +298,16 @@ function lose() {
   text(`You did not bring all the cats to safety.
     Press the mouse to try again!`, width / 2, height - 300);
   pop();
-
 }
 
-// If fifth cat lands on the fourth cat, the user wins and is redirected to the win screen.
-function stackCats() {
-  if (cat4.x === cat5.x && !(cat4.x !== cat3.x)) {
-    state = `win`;
-  }
-}
-
-// If the user does not catch all five cats, they are redirected to the lose screen.
-function noStackCats() {
-  if (cat1.y > height || cat2.y > height || cat3.y > height || cat4.y > height || cat5.y > height) {
-    state = `lose`;
-  }
+// Functions running when the simulation is running.
+function simulation() {
+  catsMoving();
+  catsOverlap();
+  stackCats();
+  noStackCats();
+  cloudsMovement();
+  display();
 }
 
 // Movement of the five cats
@@ -335,6 +328,27 @@ function catsOverlap() {
   checkCatch(cat5);
 }
 
+// If fifth cat lands on the fourth cat, the user wins and is redirected to the win screen.
+function stackCats() {
+  if (cat4.x === cat5.x && !(cat4.x !== cat3.x)) {
+    state = `win`;
+  }
+}
+
+// If the user does not catch all five cats, they are redirected to the lose screen.
+function noStackCats() {
+  if (cat1.y > height || cat2.y > height || cat3.y > height || cat4.y > height || cat5.y > height) {
+    state = `lose`;
+  }
+}
+
+// Which clouds are moving.
+function cloudsMovement() {
+  cloudsFloating(cloud1);
+  cloudsFloating(cloud2);
+  cloudsFloating(cloud3);
+}
+
 // When a cat is caught, they are stacked on the pillow (user) and the cat becomes the catcher. I am aware when you catch a cat on its side, the program registers as a successful catch.
 function moveCat(cat) {
   if (cat.caught) {
@@ -351,22 +365,15 @@ function checkCatch(cat) {
     cat.vy = 0;
     cat.caught = true;
     catcher = cat;
-    meowSounds();
+    meowSound();
   }
 }
 
 // Cats meowing sound effect.
-function meowSounds() {
+function meowSound() {
   if (state === `simulation`) {
     meowSFX.play();
   }
-}
-
-// Which clouds are moving.
-function cloudsMovement() {
-  cloudsFloating(cloud1);
-  cloudsFloating(cloud2);
-  cloudsFloating(cloud3);
 }
 
 // Movement of the clouds.
@@ -388,7 +395,7 @@ function display() {
   background(bg.fill.r, bg.fill.g, bg.fill.b); // Sky blue background
 
   // Display clouds
-  imageMode(CENTER)
+  imageMode(CENTER);
   image(cloud1.image, cloud1.x, cloud1.y, cloud1.sizeWidth, cloud1.sizeHeight);
   image(cloud2.image, cloud2.x, cloud2.y, cloud2.sizeWidth, cloud2.sizeHeight);
   image(cloud3.image, cloud3.x, cloud3.y, cloud3.sizeWidth, cloud3.sizeHeight);
@@ -398,7 +405,7 @@ function display() {
   image(pillow.image, pillow.x, pillow.y, pillow.sizeWidth, pillow.sizeHeight);
 
   // Display cats
-  imageMode(CENTER)
+  imageMode(CENTER);
   image(cat1.image, cat1.x, cat1.y, cat1.sizeWidth, cat1.sizeHeight);
   image(cat2.image, cat2.x, cat2.y, cat2.sizeWidth, cat2.sizeHeight);
   image(cat3.image, cat3.x, cat3.y, cat3.sizeWidth, cat3.sizeHeight);
