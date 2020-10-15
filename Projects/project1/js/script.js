@@ -124,17 +124,19 @@ let catcher = pillow;
 let state = `title`; // Possible states: 'title', 'simulation', 'happy ending' and 'sad ending'.
 let titleFont;
 let music;
-
-
+let meowSFX;
 
 // preload()
 //
 // Loads all typography, music and images.
 function preload() {
 
+  // Typography
   titleFont = loadFont("assets/typography/LuckiestGuy-Regular.ttf");
 
+  // Music & sfx
   music = loadSound(`assets/sounds/Stack_Cats.mp3`);
+  meowSFX = loadSound(`assets/sounds/meowSFX.wav`);
 
   pillow.image = loadImage("assets/images/pillow.png");
   cat1.image = loadImage("assets/images/catHappy_v2.png");
@@ -147,8 +149,6 @@ function preload() {
   cloud3.image = loadImage("assets/images/cloud.png");
 }
 
-
-
 // setup()
 //
 // Creating the canvas size as well as positioning the initial positions of the cats, clouds and the pillow.
@@ -158,7 +158,6 @@ function setup() {
 }
 
 function initial() {
-  // Initial positions
   pillow.y = height - 200;
   cat1.x = random(100, width - 100);
   cat2.x = random(100, width - 100);
@@ -175,8 +174,6 @@ function initial() {
   fill(255);
   textFont(titleFont);
 }
-
-
 
 // draw()
 //
@@ -210,6 +207,13 @@ function mousePressed() {
   else if (state === `instruction`) {
     state = `simulation`;
   }
+  else if (state === `win` || state === `lose`) {
+    reset();
+  }
+}
+
+function reset() {
+  location.reload();
 }
 
 // Actions when the simulation is running
@@ -315,8 +319,7 @@ function catsOverlap() {
 function moveCat(cat) {
   if (cat.caught) {
     cat.x = pillow.x;
-  }
-  else {
+  } else {
     cat.y = cat.y + cat.vy;
   }
 }
@@ -328,6 +331,13 @@ function checkCatch(cat) {
     cat.vy = 0;
     cat.caught = true;
     catcher = cat;
+    meowSounds();
+  }
+}
+
+function meowSounds() {
+  if (state === `simulation`) {
+    meowSFX.play();
   }
 }
 
@@ -348,7 +358,7 @@ function cloudsFloating(cloud) {
   }
 }
 
-  // Display base and cats.
+// Display base and cats.
 function display() {
   pillow.x = mouseX;
   noStroke();
