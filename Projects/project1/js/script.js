@@ -11,6 +11,7 @@ Pillow image : https://www.freepik.com/premium-vector/colorful-pillow-pyramid-sl
 **************************************************/
 "use strict";
 
+// Variables for the initial position for the pillow which is controlled by the user.
 let pillow = {
   x: 0,
   y: 0,
@@ -19,6 +20,7 @@ let pillow = {
   image: undefined
 };
 
+// Variables for the initial position for the five falling cats.
 let cat1 = {
   x: 0,
   y: -100,
@@ -74,6 +76,7 @@ let cat5 = {
   image: undefined
 }
 
+// Variables for the initial position for the clouds. They float from left to right.
 let cloud1 = {
   x: 0,
   y: 200,
@@ -104,6 +107,7 @@ let cloud3 = {
   image: undefined
 }
 
+// Initial color for the title typography.
 let title = {
   fill: {
     r: 239,
@@ -112,6 +116,7 @@ let title = {
   }
 }
 
+// Background color for the title, instruction and ending screen.
 let bg = {
   fill: {
     r: 173,
@@ -120,11 +125,11 @@ let bg = {
   }
 }
 
-let catcher = pillow;
+let catcher = pillow; // initially, the pillow will be the catcher.
 let state = `title`; // Possible states: 'title', 'simulation', 'happy ending' and 'sad ending'.
-let titleFont;
-let music;
-let meowSFX;
+let titleFont; // Declaring the font variable.
+let music; // Declaring the background music variable.
+let meowSFX; // Declaring the cat meowing sound effect music variable.
 
 // preload()
 //
@@ -138,6 +143,7 @@ function preload() {
   music = loadSound(`assets/sounds/Stack_Cats.mp3`);
   meowSFX = loadSound(`assets/sounds/meowSFX.wav`);
 
+  // Images
   pillow.image = loadImage("assets/images/pillow.png");
   cat1.image = loadImage("assets/images/catHappy_v2.png");
   cat2.image = loadImage("assets/images/catHappy_v2.png");
@@ -157,17 +163,20 @@ function setup() {
   initial();
 }
 
+// Initial positions for the pillow, cats and clouds.
 function initial() {
+  // Pillow
   pillow.y = height - 200;
+  // Cats
   cat1.x = random(100, width - 100);
   cat2.x = random(100, width - 100);
   cat3.x = random(100, width - 100);
   cat4.x = random(100, width - 100);
   cat5.x = random(100, width - 100);
+  // Clouds
   cloud1.x = random(50, width - 50);
   cloud2.x = random(50, width - 50);
   cloud3.x = random(50, width - 50);
-
   // Initial typography
   textAlign(CENTER, CENTER);
   textSize(30);
@@ -177,22 +186,27 @@ function initial() {
 
 // draw()
 //
-// This section will display the clouds, cats and pillow (the catcher). When the cats overlap with the pillow and with each othher, they will stack up on top of the x position of the catcher. The clouds are in the background floating away.
+// This section will display the clouds, cats and pillow (the catcher). When the cats overlap with the pillow and with each other, they will stack up on top of the x position of the catcher. The clouds are in the background floating away.
 function draw() {
+  // No background color. Avoids elements drawing on top of each other.
   background(0);
-
+  // Displays title screen if the user is in the title state.
   if (state === `title`) {
     titleScreen();
   }
+  // Displays instructions screen if the user is in the instruction state.
   if (state === `instruction`) {
     instructionScreen();
   }
+  // Displays simulation if the user is in the simulation state.
   if (state === `simulation`) {
     simulation();
   }
+  // Displays win screen if the user is in the win state.
   if (state === `win`) {
     win();
   }
+  // Displays losing screen if the user is in the lose state.
   if (state === `lose`) {
     lose();
   }
@@ -200,23 +214,27 @@ function draw() {
 
 // States change if the mouse is pressed
 function mousePressed() {
+  // When user clicks in title state, they will be redirected to istructions screen. The background music will start playing in a loop.
   if (state === `title`) {
     state = `instruction`;
     music.loop();
   }
+  // When user clicks in instructions state, they will be redirected to simulation state.
   else if (state === `instruction`) {
     state = `simulation`;
   }
+  // When user clicks in win or lose state, the page will refresh, therefore restarting the game.
   else if (state === `win` || state === `lose`) {
     reset();
   }
 }
 
+// Function to reload the page.
 function reset() {
   location.reload();
 }
 
-// Actions when the simulation is running
+// Functions running when the simulation is running.
 function simulation() {
   catsMoving();
   catsOverlap();
@@ -226,7 +244,7 @@ function simulation() {
   display();
 }
 
-//The introduction screen explaining the game.
+//The introduction screen.
 function titleScreen() {
   push();
   background(121, 144, 247);
@@ -240,6 +258,7 @@ function titleScreen() {
   pop();
 }
 
+//The instructions screen displaying an introduction and how to play instructions.
 function instructionScreen() {
   push();
   background(121, 144, 247);
@@ -256,6 +275,7 @@ function instructionScreen() {
   pop();
 }
 
+// The win screen when the user wins! They will be asked if they want to play again by clicking on the screen.
 function win() {
   push();
   background(121, 144, 247);
@@ -266,21 +286,21 @@ function win() {
 
   push();
   text(`You caught all the cats to safety.
-    Can you save them again?`, width / 2, height - 300);
+    Press the mouse to save again.`, width / 2, height - 300);
   pop();
 }
 
+// The losing screen. They will be asked if they want to play again by clicking on the screen.
 function lose() {
   push();
   background(121, 144, 247);
   text(`LOSER :(`, width / 2, height / 2);
 
-  push();
   fill(255);
-  text(`You did not bring all the cats
-    to safety. Try again!`, width / 2, height - 300);
+  text(`You did not bring all the cats to safety.
+    Press the mouse to try again!`, width / 2, height - 300);
   pop();
-  pop();
+
 }
 
 // User wins when the fifth cat is stacked.
