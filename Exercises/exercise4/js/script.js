@@ -15,15 +15,20 @@ let user = {
   vx: 0,
   vy: 0,
   speed: 5,
-  size: 50
+  size: 50,
+  image: undefined
 };
 
-// setup()
-//
-// Description of setup() goes here.
+// Load images.
+function preload() {
+  user.image = loadImage("assets/images/star.png");
+}
+
+// Setup the opportunities.
 function setup() {
   createCanvas(600, 600);
-  stroke(255);
+  stroke(255); // display stars
+  noCursor();
 
   // Create opportunities.
   for (let i = 0; i < groupSize; i++) {
@@ -31,11 +36,12 @@ function setup() {
   }
 }
 
+// Look of the opportunities
 function createOpportunity(x, y) {
   let opportunity = {
     x: x,
     y: y,
-    size: random(10, 70),
+    size: random(20, 70),
     vx: 0,
     vy: 0,
     speed: 2
@@ -43,23 +49,21 @@ function createOpportunity(x, y) {
   return opportunity;
 }
 
-// draw()
-//
-// Description of draw() goes here.
+// Displays opportunities movement and user ad star background
 function draw(opportunity) {
   background(0);
 
+  // Displays opportunities
   for (let i = 0; i < group.length; i++) {
     moveGroup(group[i]);
     displayGroup(group[i]);
   }
 
   displayUser();
-
-  // Static star background
   drawStars();
 }
 
+// Movement of the opportunities.
 function moveGroup(opportunity) {
   let change = random(0, 1);
   if (change < 0.05) {
@@ -76,17 +80,17 @@ function moveGroup(opportunity) {
   opportunity.y = constrain(opportunity.y, 0, height);
 }
 
+// Display of the opportunties
 function displayGroup(opportunity) {
   push();
-  fill(200, 100, 100);
+  fill(254, 254, 187); // Yellow stars
   noStroke();
   ellipse(opportunity.x, opportunity.y, opportunity.size);
   pop();
 }
 
+// Static star background
 function drawStars() {
-  // Static star background
-
   for (let i = 0; i < numStars; i++) {
     let x = random(0, width);
     let y = random(0, height);
@@ -94,6 +98,7 @@ function drawStars() {
   }
 }
 
+// When user clicks with the mouse, an opportunity is taken away!
 function mousePressed() {
   for (let i = 0; i < group.length; i++) {
     let opportunity = group[i];
@@ -111,5 +116,6 @@ function displayUser() {
   user.x = constrain(user.x, 0, width);
   user.y = constrain(user.y, 0, height);
 
-  ellipse(user.x, user.y, user.size);
+  imageMode(CENTER, CENTER);
+  image(user.image, user.x, user.y, user.size, user.size);
 }

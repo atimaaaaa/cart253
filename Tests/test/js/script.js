@@ -1,45 +1,36 @@
-/**************************************************
-Template p5 project
-Pippin Barr
-
-Here is a description of this template p5 project.
-**************************************************/
-
-// setup()
-//
-// Description of setup() goes here.
-let clownImage = {
-  x: 250,
+let rectangle = {
+  x: 0,
   y: 250,
   size: 100,
-  image: undefined
-}
+  vx: 0,
+  vy: 0,
+  speed: 2,
+  scale: 1,
+  angle: 0
+};
 
-let bg = {
-  x: 250,
-  y: 250,
-  size: 500,
-  image: undefined
-}
-
-function preload() {
-  clownImage.image = loadImage("assets/images/clown.png");
-}
-
-function setup(){
-  bg.image = loadImage("assets/images/bg.jpg");
-  createCanvas(500,500);
+function setup() {
+  createCanvas(500, 500);
+  rectangle.vx = rectangle.speed;
 }
 
 function draw() {
-  background(bg.image);
+  background(0);
 
+  // Move the rectangle according to its velocirty
+  rectangle.x = rectangle.x + rectangle.vx;
+  rectangle.y = rectangle.y + rectangle.vy;
 
-  clownImage.x = mouseX;
-  clownImage.y = mouseY;
+  // Increase the rectangle's scale and angle
+  rectangle.scale = rectangle.scale + 0.01;
+  rectangle.angle = rectangle.angle + 0.05;
 
-  imageMode(CENTER);
-  image(clownImage.image, clownImage.x, clownImage.y, clownImage.size, clownImage.size);
-  image(bg.image, bg.x, bg.y, bg.size, bg.size);
-} // Defined image, position x,
-// position y, scale horizontal, scale vertical. Scale is optional
+  // Display the rectangle
+  push();
+  rectMode(CENTER); // Centered
+  translate(rectangle.x, rectangle.y); // Translate to rectangle position
+  scale(rectangle.scale); // Apply scale
+  rotate(rectangle.angle); // Apply rotation
+  rect(0, 0, rectangle.size, rectangle.size); // Draw rectangle at 0,0 because of translate()
+  pop();
+}
