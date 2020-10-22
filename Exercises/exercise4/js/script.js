@@ -6,8 +6,10 @@ Big Opportunities
 **************************************************/
 "use strict";
 
+let state = `title`;
+let timer = 30;
 let group = []; // Empty array with the fish
-let groupSize = 15;
+let groupSize = 1;
 let numStars = 10;
 let user = {
   x: 300,
@@ -29,7 +31,12 @@ function setup() {
   createCanvas(600, 600);
   stroke(255); // display stars
   noCursor();
+  opportunitiesDisplay();
+  textAlign(CENTER, CENTER);
+  textSize(20);
+}
 
+function opportunitiesDisplay() {
   // Create opportunities.
   for (let i = 0; i < groupSize; i++) {
     group[i] = createOpportunity(random(0, width), random(0, height));
@@ -50,17 +57,69 @@ function createOpportunity(x, y) {
 }
 
 // Displays opportunities movement and user ad star background
-function draw(opportunity) {
-  background(0);
+function draw() {
+  if (state === `title`) {
+    title();
+  } else if (state === `animation`) {
+    animation();
+  } else if (state === `win`) {
+    win();
+  } else if (state === `lose`) {
+    lose();
+  }
+}
 
-  // Displays opportunities
+function title() {
+  push();
+  background(254, 254, 187);
+  text(`Big Opportunities`, width / 2, height / 2);
+  pop();
+
+  push();
+  text(
+    `Help Starry catch all the opportunities of the galaxy!
+  Move Starry with the mouse.
+  Click the mouse to catch the opportunities
+  Good luck!`,
+    width / 2,
+    (height * 2) / 3
+  );
+  pop();
+}
+function animation() {
+  background(0);
+  opportunitiesMovement();
+  displayUser();
+  drawStars();
+  timerText();
+
+  if (timer > 0 && group.length === 0) {
+    state = `win`;
+  } else if (timer <= 0) {
+    state = `lose`;
+  }
+}
+
+function win() {
+  push();
+  background(0);
+  text(`You win!`, width / 2, height / 2);
+  pop();
+}
+
+function lose() {
+  push();
+  background(0);
+  text(`You lose! Try again.`, width / 2, height / 2);
+  pop();
+}
+
+// Displays opportunities
+function opportunitiesMovement() {
   for (let i = 0; i < group.length; i++) {
     moveGroup(group[i]);
     displayGroup(group[i]);
   }
-
-  displayUser();
-  drawStars();
 }
 
 // Movement of the opportunities.
@@ -98,6 +157,19 @@ function drawStars() {
   }
 }
 
+function timerText() {
+  textAlign(CENTER, CENTER);
+  textSize(50);
+  text(timer, width / 2, height / 2);
+  fill(255);
+  if (frameCount % 60 === 0 && timer > 0) {
+    timer--;
+  }
+  if (timer === 0) {
+    text(`GAME OVER`, width / 2, height * 0.7);
+  }
+}
+
 // When user clicks with the mouse, an opportunity is taken away!
 function mousePressed() {
   for (let i = 0; i < group.length; i++) {
@@ -107,6 +179,11 @@ function mousePressed() {
       group.splice(i, 1);
       break;
     }
+  }
+
+  // Transition from title to animation
+  if (state === `title`) {
+    state = `animation`;
   }
 }
 
