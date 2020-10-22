@@ -2,73 +2,114 @@
 Activity 4: Age of aquariums
 Atima Ng
 
-Here is a description of this template p5 project.
+Big Opportunities
 **************************************************/
 "use strict";
 
-let school = []; // Empty array with the fish
-let schoolSize = 10;
+let group = []; // Empty array with the fish
+let groupSize = 15;
+let numStars = 10;
+let user = {
+  x: 300,
+  y: 300,
+  vx: 0,
+  vy: 0,
+  speed: 5,
+  size: 50
+};
 
 // setup()
 //
 // Description of setup() goes here.
 function setup() {
   createCanvas(600, 600);
+  stroke(255);
 
-  for (let i = 0; i < schoolSize; i++) {
-    school[i] = createFish(random(0, width), random(0, height));
+  // Create opportunities.
+  for (let i = 0; i < groupSize; i++) {
+    group[i] = createOpportunity(random(0, width), random(0, height));
   }
 }
 
-function createFish(x, y) {
-  let fish = {
+function createOpportunity(x, y) {
+  let opportunity = {
     x: x,
     y: y,
-    size: 50,
+    size: random(10, 70),
     vx: 0,
     vy: 0,
     speed: 2
   };
-  return fish;
+  return opportunity;
 }
 
 // draw()
 //
 // Description of draw() goes here.
-function draw(fish) {
+function draw(opportunity) {
   background(0);
 
-  for (let i = 0; i < school.length; i++) {
-    moveFish(school[i]);
-    displayFish(school[i]);
+  for (let i = 0; i < group.length; i++) {
+    moveGroup(group[i]);
+    displayGroup(group[i]);
   }
+
+  displayUser();
+
+  // Static star background
+  drawStars();
 }
 
-function moveFish(fish) {
+function moveGroup(opportunity) {
   let change = random(0, 1);
   if (change < 0.05) {
-    fish.vx = random(-fish.speed, fish.speed);
-    fish.vy = random(-fish.speed, fish.speed);
+    opportunity.vx = random(-opportunity.speed, opportunity.speed);
+    opportunity.vy = random(-opportunity.speed, opportunity.speed);
   }
 
-  // Move the fish
-  fish.x = fish.x + fish.vx;
-  fish.y = fish.y + fish.vy;
+  // Move the opportunity
+  opportunity.x = opportunity.x + opportunity.vx;
+  opportunity.y = opportunity.y + opportunity.vy;
 
-  // Constrain the fish to the canvas
-  fish.x = constrain(fish.x, 0, width);
-  fish.y = constrain(fish.y, 0, height);
+  // Constrain the opportunity to the canvas
+  opportunity.x = constrain(opportunity.x, 0, width);
+  opportunity.y = constrain(opportunity.y, 0, height);
 }
 
-function displayFish(fish) {
+function displayGroup(opportunity) {
   push();
   fill(200, 100, 100);
   noStroke();
-  ellipse(fish.x, fish.y, fish.size);
+  ellipse(opportunity.x, opportunity.y, opportunity.size);
   pop();
 }
 
+function drawStars() {
+  // Static star background
+
+  for (let i = 0; i < numStars; i++) {
+    let x = random(0, width);
+    let y = random(0, height);
+    point(x, y);
+  }
+}
+
 function mousePressed() {
-  let fish = createFish(mouseX, mouseY);
-  school.push(fish);
+  for (let i = 0; i < group.length; i++) {
+    let opportunity = group[i];
+    let d = dist(user.x, user.y, opportunity.x, opportunity.y);
+    if (d < opportunity.size / 2) {
+      group.splice(i, 1);
+      break;
+    }
+  }
+}
+
+function displayUser() {
+  user.x = mouseX;
+  user.y = mouseY;
+  user.x = constrain(user.x, 0, width);
+  user.y = constrain(user.y, 0, height);
+
+  ellipse(user.x, user.y, user.size);
 }
