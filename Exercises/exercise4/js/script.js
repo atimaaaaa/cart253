@@ -3,13 +3,14 @@ Activity 4: Age of aquariums
 Atima Ng
 
 Big Opportunities
+A simulation on a star with big dreams. They want to catch as many opportunities as possible in order to become a successful and happy star. Move Starry (user) with the mouse and catch the opportunities by clicking on the mouse when located on top of an opportunity. Good luck!
 **************************************************/
 "use strict";
 
 let state = `title`;
-let timer = 30;
+let timer = 15;
 let group = []; // Empty array with the fish
-let groupSize = 1;
+let groupSize = 15;
 let numStars = 10;
 let user = {
   x: 300,
@@ -31,9 +32,9 @@ function setup() {
   createCanvas(600, 600);
   stroke(255); // display stars
   noCursor();
-  opportunitiesDisplay();
   textAlign(CENTER, CENTER);
   textSize(20);
+  opportunitiesDisplay();
 }
 
 function opportunitiesDisplay() {
@@ -179,12 +180,18 @@ function mousePressed() {
       group.splice(i, 1);
       break;
     }
-  }
 
-  // Transition from title to animation
-  if (state === `title`) {
-    state = `animation`;
+    // Transition from title to animation
+    if (state === `title`) {
+      state = `animation`;
+    } else if (state === `win` || state === `lose`) {
+      reset();
+    }
   }
+}
+
+function reset() {
+  location.reload(); // Yes, this is a simple way to refresh the page, please forgive me for my laziness on this submission day hehe.
 }
 
 function displayUser() {
