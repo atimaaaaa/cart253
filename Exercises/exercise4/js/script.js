@@ -8,7 +8,7 @@ A simulation on a star with big dreams. They want to catch as many opportunities
 "use strict";
 
 let state = `title`;
-let timer = 15;
+let timer = 20;
 let group = []; // Empty array with the fish
 let groupSize = 15;
 let numStars = 10;
