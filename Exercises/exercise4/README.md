@@ -1,3 +1,6 @@
-# Template p5 project
+E4: Age of the Aquariums
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+Move user with the mouse.
+Catch the opportunities by moving the mouse to the opportunities and clicking on them. 
+
+Have fun!
