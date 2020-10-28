@@ -19,7 +19,11 @@ let garden = {
     r: 120,
     g: 180,
     b: 120
-  }
+  },
+  // An array of clouds floating in the sky
+  clouds: [],
+  // How many clouds present in the sky
+  numClouds: 2
 };
 
 // setup() creates the canvas and the flowers in the garden
@@ -55,6 +59,16 @@ function setup() {
     garden.bees.push(bee);
   }
 
+  // Create our clouds by counting up to the number of numClouds
+  for (let i = 0; i < garden.numClouds; i++) {
+    // Variables added cor clarity
+    let x = random(0, width);
+    let y = random(50, 200);
+    // Create new bees using arguments
+    let cloud = new Cloud(x, y);
+    garden.clouds.push(cloud);
+  }
+
   //Creates red flowers for red garden
   for (let i = 0; i < redGardenSize; i++) {
     redGarden[i] = createFlower(random(0, width), random(0, height));
@@ -71,9 +85,9 @@ function createFlower(x, y) {
     stemLength: 40,
     // Color information
     petalColor: {
-      r: 155,
-      g: 16,
-      b: 21
+      r: random(100, 255),
+      g: random(100, 255),
+      b: random(100, 255)
     },
     centreColor: {
       r: 50,
@@ -117,6 +131,12 @@ function draw() {
       bee.move();
       bee.display();
     }
+  }
+
+  for (let i = 0; i < garden.clouds.length; i++) {
+    let cloud = garden.clouds[i];
+    cloud.move();
+    cloud.display();
   }
 
   for (let i = 0; i < redGarden.length; i++) {
