@@ -67,16 +67,23 @@ function createFlower(x, y) {
     y: y,
     size: 30,
     petalThickness: 10,
+    stemThickness: 5,
+    stemLength: 40,
     // Color information
     petalColor: {
-      r: 255,
-      g: 50,
-      b: 50
+      r: 155,
+      g: 16,
+      b: 21
     },
     centreColor: {
       r: 50,
       g: 0,
       b: 0
+    },
+    stemColor: {
+      r: 50,
+      g: 150,
+      b: 50
     }
   };
   return redFlower;
@@ -124,6 +131,14 @@ function mousePressed() {
 
 function displayFlowers(redFlower) {
   push();
+  strokeWeight(redFlower.stemThickness);
+  stroke(redFlower.stemColor.r, redFlower.stemColor.g, redFlower.stemColor.b);
+  line(
+    redFlower.x,
+    redFlower.y,
+    redFlower.x,
+    redFlower.y + redFlower.stemLength
+  );
   strokeWeight(redFlower.petalThickness);
   fill(
     redFlower.centreColor.r,
