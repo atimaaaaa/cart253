@@ -1,38 +1,68 @@
 "use strict";
 
-// Our array of lines from one of Hamlet's soliloquys (a sequence
-// where he essentially talks to himself). We will want to display
-// each line one after the other as the user clicks.
-let soliloquy = [
-  `To be, or not to be`,
-  `That is the question.`,
-  `Whether 'tis nobler in the mind`,
-  `To suffer the slings and arrows`,
-  `Of outrageous fortune`,
-  `Or to take arms`,
-  `Against a sea of sorrows`,
-  `And by opposing end them.`
-];
+// Garden with red flowers
+let redGarden = [];
+let redGardenSize = 0;
 
-let currentFortune = 0;
-
+// setup() creates the canvas and the flowers in the garden
 function setup() {
   createCanvas(600, 600);
-  textAlign(CENTER, CENTER);
-  textSize(32);
-  fill(255);
+
+  // Create red garden
+  for (let i = 0; i < redGardenSize; i++) {
+    redGarden[i] = createFlower(random(0, width), random(0, height));
+  }
 }
 
-function draw() {
-  background(0);
+function createFlower(x, y) {
+  let redFlower = {
+    x: x,
+    y: y,
+    size: 30,
+    petalThickness: 10,
+    // Color information
+    petalColor: {
+      r: 255,
+      g: 50,
+      b: 50
+    },
+    centreColor: {
+      r: 50,
+      g: 0,
+      b: 0
+    }
+  };
+  return redFlower;
+}
 
-  let dialog = soliloquy[currentFortune];
-  text(dialog, width / 2, height / 2);
+// draw()
+// Displays our flowers
+function draw(redFlower) {
+  background(0);
+  // Add flowers to garden
+  for (let i = 0; i < redGarden.length; i++) {
+    displayFlowers(redGarden[i]);
+  }
 }
 
 function mousePressed() {
-  currentFortune = currentFortune + 1;
-  if (currentFortune === soliloquy.length) {
-    currentFortune = soliloquy.length - 1;
-  }
+  let redFlower = createFlower(mouseX, mouseY);
+  redGarden.push(redFlower); // Add red flower to our array
+}
+
+function displayFlowers(redFlower) {
+  push();
+  strokeWeight(redFlower.petalThickness);
+  fill(
+    redFlower.centreColor.r,
+    redFlower.centreColor.g,
+    redFlower.centreColor.b
+  );
+  stroke(
+    redFlower.petalColor.r,
+    redFlower.petalColor.g,
+    redFlower.petalColor.b
+  );
+  ellipse(redFlower.x, redFlower.y, redFlower.size);
+  pop();
 }
