@@ -1,5 +1,6 @@
 "use strict";
 
+let state = `title`; // Other states include instructions, simulation, win, lose
 // Garden with red flowers
 let redGarden = [];
 let redGardenSize = 0;
@@ -29,6 +30,8 @@ let garden = {
 // setup() creates the canvas and the flowers in the garden
 function setup() {
   createCanvas(600, 600);
+  textAlign(CENTER, CENTER);
+  textSize(32);
 
   // Create our flowers by counting up to the number of the flowers
   for (let i = 0; i < garden.numFlowers; i++) {
@@ -106,9 +109,76 @@ function createFlower(x, y) {
 // draw()
 // Displays our flowers
 function draw() {
+  // Title
+  if (state === `title`) {
+    title();
+  } else if (state === `instructions`) {
+    instructions();
+  } else if (state === `simulation`) {
+    simulation();
+  } else if (state === `win`) {
+    win();
+  } else if (state === `lose`) {
+    lose();
+  }
+}
+
+function title() {
+  background(141, 242, 109);
+  fill(255);
+  text(
+    `Gardenia
+Click to continue`,
+    width / 2,
+    height / 2
+  );
+}
+
+function instructions() {
+  // Instructions
+  background(141, 242, 109);
+  fill(255);
+  text(
+    `Can you plant 40 flowers
+    before all the bees or flowers die?
+    Click anywhere to plant a flower.`,
+    width / 2,
+    height / 2
+  );
+}
+
+function win() {
+  // Win state
+  background(141, 242, 109);
+  fill(255);
+  text(`You win! :-)`, width / 2, height / 2);
+}
+
+function lose() {
+  // Lose state
+  background(141, 242, 109);
+  fill(255);
+  text(`You lose :-()`, width / 2, height / 2);
+}
+
+function mousePressed() {
+  if (state === `title`) {
+    state = `instructions`;
+  } else if (state === `instructions`) {
+    state = `simulation`;
+    let redFlower = createFlower(mouseX, mouseY);
+    redGarden.push(redFlower); // Add red flower to our array
+  }
+}
+
+function simulation() {
+  displaySimulation();
+  displayFlowers();
+}
+
+function displaySimulation() {
   // Display the grass
   background(garden.grassColor.r, garden.grassColor.g, garden.grassColor.b);
-  // Display the user
 
   // Loop through all the flowers in the array and display them
   for (let i = 0; i < garden.flowers.length; i++) {
@@ -142,11 +212,13 @@ function draw() {
   for (let i = 0; i < redGarden.length; i++) {
     displayFlowers(redGarden[i]);
   }
-}
 
-function mousePressed() {
-  let redFlower = createFlower(mouseX, mouseY);
-  redGarden.push(redFlower); // Add red flower to our array
+  if (
+    (state === `simulation` && garden.bees.length === 0) ||
+    garden.flowers.length === 0
+  ) {
+    state = `lose`;
+  }
 }
 
 function displayFlowers(redFlower) {
