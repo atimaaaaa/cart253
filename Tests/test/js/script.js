@@ -1,36 +1,38 @@
-let rectangle = {
-  x: 0,
-  y: 250,
-  size: 100,
-  vx: 0,
-  vy: 0,
-  speed: 2,
-  scale: 1,
-  angle: 0
-};
+"use strict";
+
+// Our array of lines from one of Hamlet's soliloquys (a sequence
+// where he essentially talks to himself). We will want to display
+// each line one after the other as the user clicks.
+let soliloquy = [
+  `To be, or not to be`,
+  `That is the question.`,
+  `Whether 'tis nobler in the mind`,
+  `To suffer the slings and arrows`,
+  `Of outrageous fortune`,
+  `Or to take arms`,
+  `Against a sea of sorrows`,
+  `And by opposing end them.`
+];
+
+let currentFortune = 0;
 
 function setup() {
-  createCanvas(500, 500);
-  rectangle.vx = rectangle.speed;
+  createCanvas(600, 600);
+  textAlign(CENTER, CENTER);
+  textSize(32);
+  fill(255);
 }
 
 function draw() {
   background(0);
 
-  // Move the rectangle according to its velocirty
-  rectangle.x = rectangle.x + rectangle.vx;
-  rectangle.y = rectangle.y + rectangle.vy;
+  let dialog = soliloquy[currentFortune];
+  text(dialog, width / 2, height / 2);
+}
 
-  // Increase the rectangle's scale and angle
-  rectangle.scale = rectangle.scale + 0.01;
-  rectangle.angle = rectangle.angle + 0.05;
-
-  // Display the rectangle
-  push();
-  rectMode(CENTER); // Centered
-  translate(rectangle.x, rectangle.y); // Translate to rectangle position
-  scale(rectangle.scale); // Apply scale
-  rotate(rectangle.angle); // Apply rotation
-  rect(0, 0, rectangle.size, rectangle.size); // Draw rectangle at 0,0 because of translate()
-  pop();
+function mousePressed() {
+  currentFortune = currentFortune + 1;
+  if (currentFortune === soliloquy.length) {
+    currentFortune = soliloquy.length - 1;
+  }
 }
