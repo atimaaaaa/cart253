@@ -1,26 +1,25 @@
 <!DOCTYPE html>
-<html lang="">
+<html>
+  <head>
+    <title>P5.js Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.js"></script>
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/837599/p5.speech.js"></script>
+    <script>
+      var speech = new p5.Speech();
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      function setup() {
+        createCanvas(600, 600);
+        background(255, 24, 93);
+        fill(255);
+        textSize(36);
+        textAlign(CENTER);
+        text("Click here for a surprise!", width / 2, height / 2);
+      }
 
-  <title>Template p5 project</title>
-
-  <!-- CSS stylesheet(s) -->
-  <link rel="stylesheet" type="text/css" href="css/style.css" />
-
-  <!-- Library script(s) -->
-  <script src="js/libraries/p5.min.js"></script>
-  <script src="js/libraries/p5.sound.min.js"></script>
-
-  <!-- My script(s) -->
-  <script src="js/script.js"></script>
-
-</head>
-
-<body>
-  <!-- HTML would go here if needed. -->
-</body>
-
+      function mouseClicked() {
+        speech.speak("Hi you are very cute");
+      }
+    </script>
+  </head>
+  <body></body>
 </html>
