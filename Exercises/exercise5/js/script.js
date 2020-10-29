@@ -31,7 +31,7 @@ let garden = {
 function setup() {
   createCanvas(600, 600);
   textAlign(CENTER, CENTER);
-  textSize(32);
+  textSize(24);
 
   // Create our flowers by counting up to the number of the flowers
   for (let i = 0; i < garden.numFlowers; i++) {
@@ -88,9 +88,9 @@ function createFlower(x, y) {
     stemLength: 40,
     // Color information
     petalColor: {
-      r: random(100, 255),
-      g: random(100, 255),
-      b: random(100, 255)
+      r: 200,
+      g: 0,
+      b: 0
     },
     centreColor: {
       r: 50,
@@ -223,6 +223,7 @@ function displaySimulation() {
 
 function displayFlowers(redFlower) {
   push();
+  console.log(redFlower);
   strokeWeight(redFlower.stemThickness);
   stroke(redFlower.stemColor.r, redFlower.stemColor.g, redFlower.stemColor.b);
   line(
