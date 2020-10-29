@@ -1,8 +1,9 @@
 "use strict";
 
 let state = `title`; // Other states include instructions, simulation, win, lose
-// Garden with red flowers
+// Garden array with red flowers
 let redGarden = [];
+// Initial red flowers.
 let redGardenSize = 0;
 
 // Our garden
@@ -78,6 +79,7 @@ function setup() {
   }
 }
 
+// Creates rrd flowers on mouse pressed
 function createFlower(x, y) {
   let redFlower = {
     x: x,
@@ -122,7 +124,7 @@ function draw() {
     lose();
   }
 }
-
+// Title screen
 function title() {
   background(141, 242, 109);
   fill(255);
@@ -134,6 +136,7 @@ Click to continue`,
   );
 }
 
+// Instructions screen
 function instructions() {
   // Instructions
   background(141, 242, 109);
@@ -147,20 +150,21 @@ function instructions() {
   );
 }
 
+// Win state
 function win() {
-  // Win state
   background(141, 242, 109);
   fill(255);
   text(`You win! :-)`, width / 2, height / 2);
 }
 
+// Lose state
 function lose() {
-  // Lose state
   background(141, 242, 109);
   fill(255);
   text(`You lose :-()`, width / 2, height / 2);
 }
 
+// States of the game.
 function mousePressed() {
   if (state === `title`) {
     state = `instructions`;
@@ -179,6 +183,7 @@ function reset() {
   location.reload();
 }
 
+// What happens during the simulation
 function simulation() {
   displaySimulation();
   checkWin();
@@ -212,8 +217,10 @@ function displaySimulation() {
     }
   }
 
+  // Loop through all the clouds in the array and display them
   for (let i = 0; i < garden.clouds.length; i++) {
     let cloud = garden.clouds[i];
+    // Update the cloud by moving and displaying it
     cloud.move();
     cloud.display();
   }
@@ -235,6 +242,7 @@ function checkLose() {
   }
 }
 
+// Displays red flowers
 function displayFlowers(redFlower) {
   push();
   strokeWeight(redFlower.stemThickness);
