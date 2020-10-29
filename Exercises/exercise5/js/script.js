@@ -139,7 +139,7 @@ function instructions() {
   background(141, 242, 109);
   fill(255);
   text(
-    `Can you plant 40 flowers
+    `Can you plant 30 flowers
     before all the bees or flowers die?
     Click anywhere to plant a flower.`,
     width / 2,
@@ -166,14 +166,23 @@ function mousePressed() {
     state = `instructions`;
   } else if (state === `instructions`) {
     state = `simulation`;
+  } else if (state === `simulation`) {
     let redFlower = createFlower(mouseX, mouseY);
     redGarden.push(redFlower); // Add red flower to our array
+  } else if (state === `win` || state === `lose`) {
+    reset();
   }
+}
+
+// Function to reload the game at the end of the simulation.
+function reset() {
+  location.reload();
 }
 
 function simulation() {
   displaySimulation();
-  displayFlowers();
+  checkWin();
+  checkLose();
 }
 
 function displaySimulation() {
@@ -212,18 +221,22 @@ function displaySimulation() {
   for (let i = 0; i < redGarden.length; i++) {
     displayFlowers(redGarden[i]);
   }
+}
 
-  if (
-    (state === `simulation` && garden.bees.length === 0) ||
-    garden.flowers.length === 0
-  ) {
+function checkWin() {
+  if (state === `simulation` && redGarden.length === 30) {
+    state = `win`;
+  }
+}
+
+function checkLose() {
+  if (state === `simulation` && redGarden.length < 30 && garden.bees <= 0) {
     state = `lose`;
   }
 }
 
 function displayFlowers(redFlower) {
   push();
-  console.log(redFlower);
   strokeWeight(redFlower.stemThickness);
   stroke(redFlower.stemColor.r, redFlower.stemColor.g, redFlower.stemColor.b);
   line(
