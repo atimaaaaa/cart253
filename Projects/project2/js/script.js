@@ -61,6 +61,9 @@ function draw() {
   tiling(60,60);
   tiling(120,120);
   tiling(60,180);
+  tiling(120,240);
+  tiling(60,300);
+
   antMovement();
   antDisplay();
 
@@ -86,7 +89,7 @@ function draw() {
 
 function tiling(x,y) {
   // Draws background tiles
-  // let x = coloredTile.x;
+
   for (let i = 0; i < coloredTile.segments; i++) {
     push();
     noStroke();
@@ -96,7 +99,6 @@ function tiling(x,y) {
     pop();
   }
 }
-
 
 function antMovement(){
   //Horizontal movement
