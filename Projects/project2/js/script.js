@@ -22,7 +22,8 @@ let ant = {
   size: 20,
   vx: 0,
   vy: 0,
-  speed: 5
+  speed: 5,
+  spacing:15,
 }
 
 function setup() {
@@ -30,6 +31,9 @@ function setup() {
 
   // Creates cherries by counting up to the number of cherries
   for (let i = 0; i < object.numCherries; i++) {
+    // Create variables for the cherry argument
+    let x = random (0, width);
+    let y = random (0, height);
     let cherry = new Cherry();
     object.cherries.push(cherry);
   }
@@ -42,11 +46,17 @@ function draw() {
   background(0);
   antMovement();
 
+  // Loop through all the cherries and displays them.
   for (let i = 0; i < object.cherries.length; i++) {
-    let cherry = object.cherries[i];
-    cherry.display();
-  }
 
+      let cherry = object.cherries[i];
+      cherry.display();
+
+      //Check if the cherry is captured
+      if (cherry.capture = false) {
+      cherry.checkCapture();
+    }
+  }
 
   // Ant movement
   ant.x += ant.vx;
@@ -54,7 +64,10 @@ function draw() {
 
   // Draws ant
   fill(255);
+  noStroke();
   ellipse(ant.x, ant.y, ant.size,ant.size);
+  ellipse(ant.x + ant.spacing, ant.y, ant.size,ant.size);
+  ellipse(ant.x + 2 * ant.spacing, ant.y, ant.size,ant.size);
 }
 
 
