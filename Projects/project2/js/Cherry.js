@@ -16,11 +16,13 @@ class Cherry {
     // }
   }
 
-  checkCapture(){
-     let d = dist(ant.x, ant.y, cherry.x, cherry.y);
+  checkCapture(ant){
+     let d = dist(ant.x, ant.y, this.x, this.y);
      if (d < ant.size/2 + this.size/2){
-       cherry.captured = true;
+       this.captured = true;
+       return true;
     }
+    return false;
   }
 
   //Displays cherry on the canvas
