@@ -32,9 +32,9 @@ function setup() {
   // Creates cherries by counting up to the number of cherries
   for (let i = 0; i < object.numCherries; i++) {
     // Create variables for the cherry argument
-    let x = random (0, width);
-    let y = random (0, height);
-    let cherry = new Cherry();
+    let x = random(0, width);
+    let y = random(0, height);
+    let cherry = new Cherry(x,y);
     object.cherries.push(cherry);
   }
 }
@@ -48,21 +48,19 @@ function draw() {
 
   // Loop through all the cherries and displays them.
   for (let i = 0; i < object.cherries.length; i++) {
-
       let cherry = object.cherries[i];
-      cherry.display();
-
       //Check if the cherry is captured
-      if (cherry.capture = false) {
+      if (cherry.captured = false) {
+      cherry.display();
       cherry.checkCapture();
     }
   }
 
-  // Ant movement
+  // Ant movement.
   ant.x += ant.vx;
   ant.y += ant.vy;
 
-  // Draws ant
+  // Draws ant.
   fill(255);
   noStroke();
   ellipse(ant.x, ant.y, ant.size,ant.size);
