@@ -98,7 +98,7 @@ function draw() {
   let level = mic.getLevel();
 
   // check if ghost is scared
-  if (level > 0.01) {
+  if (level > 0.5) {
     // exits to the right
     ghost.vx = 20;
   }
