@@ -63,24 +63,56 @@ Here is a description of this template p5 project.
 //   pop();
 // }
 // }
+"use strict";
+let mic;
+let ghost = {
+  x: 0,
+  y:0,
+  vx: 0,
+  vy:0,
+  img: undefined,
+};
+
+function preload() {
+  ghost.image = loadImage(`assets/images/clown.png`);
+}
 
 function setup(){
-  createCanvas(1200,800);
+  createCanvas(600,600);
+
+  ghost.x = width/2;
+  ghost.y = height/2;
+
+  mic = new p5.AudioIn();
+  mic.start();
 }
 
 function draw() {
   background(0);
-  createColoredTiles(60,60);
-}
 
-function createColoredTiles(x,y){
-    for (let i = 0; i < 8; i++) {
-    noStroke();
-    fill(255);
-    rectMode(CENTER);
-    // We can still use x and y as variables
-    rect(x, y, 60, 60);
-    // Including changing x inside our loop
-    x = x + 120;
+  // tremblinb
+  ghost.x = ghost.x + random(-1,1);
+  ghost.y = ghost.y + random(-1,1);
+
+  //get volume into microphone
+  let level = mic.getLevel();
+
+  // check if ghost is scared
+  if (level > 0.01) {
+    // exits to the right
+    ghost.vx = 20;
   }
+
+  // move the ghost
+  ghost.x = ghost.x + ghost.vx;
+  ghost.y = ghost.y + ghost.vy;
+
+  // display the ghost
+  push();
+  imageMode(CENTER);
+  tint(255,50);
+  image(ghost.image, ghost.x, ghost.y);
+  pop();
+
+
 }
