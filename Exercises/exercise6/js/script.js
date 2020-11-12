@@ -1,15 +1,15 @@
 /**************************************************
-Exercise 06: Make Some Noise
-Atima Ng
+Template p5 project
+Pippin Barr
 
-My take on exercise 6
+Here is a description of this template p5 project.
 **************************************************/
 
 // setup()
 //
 // Description of setup() goes here.
 function setup() {
-
+  
 }
 
 // draw()
