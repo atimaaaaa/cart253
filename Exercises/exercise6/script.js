@@ -2,7 +2,7 @@
 Exercise 06: Make Some Noise
 Atima Ng
 
-Here is a description of this template p5 project.
+My take on exercise 6
 **************************************************/
 
 // setup()
