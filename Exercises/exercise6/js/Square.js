@@ -13,6 +13,7 @@ class Square {
     this.vx = random(-this.speed, this.speed);
     this.vy = random(-this.speed, this.speed);
     this.growth = 2;
+    this.angle = 0;
 
 
   //oscillator
@@ -78,8 +79,12 @@ class Square {
     push();
     noStroke();
     fill(this.fill.r, this.fill.g, this.fill.b);
+    translate(0,0);
+    rotate(this.angle);
     rectMode(CENTER);
     rect(this.x, this.y, this.size);
     pop();
+
+    this.angle = this.angle + 0.02;
   }
 }
