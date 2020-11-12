@@ -26,7 +26,7 @@ class Ball {
   this.note = note;
   this.synth = new p5.PolySynth();
 }
-
+// Circle movement with oscillator
   move() {
     this.x += this.vx;
     this.y += this.vy;
@@ -38,6 +38,7 @@ class Ball {
     this.oscillator.freq(newFreq);
   }
 
+  // When reaching the end of canvas, the shape bounces back
   bounce() {
     if (this.x - this.size/2 < 0 || this.x + this.size/2 > width) {
       this.vx = -this.vx;
@@ -52,11 +53,12 @@ class Ball {
       this.grow();
     }
   }
-
+  // Plays note.
   playNote() {
     this.synth.play(this.note, 0.2, 0, 0.2);
   }
 
+  // The fill color changes to a random color.
   changeColor() {
     this.fill = {
       r: random(200,255),
@@ -64,11 +66,12 @@ class Ball {
       b: random(200,255),
     };
   }
-
+  // The shape size expands.
   grow(){
     this.size = this.size + this.growth;
   }
 
+  // Displays the shape
   display() {
     push();
     noStroke();

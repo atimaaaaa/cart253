@@ -26,7 +26,7 @@ class Square {
   this.note = note;
   this.synth = new p5.PolySynth();
 }
-
+  // Square movement with oscillator
   move() {
     this.x += this.vx;
     this.y += this.vy;
@@ -38,6 +38,7 @@ class Square {
     this.oscillator.freq(newFreq);
   }
 
+  // When reaching the end of canvas, the shape bounces back
   bounce() {
     if (this.x - this.size/2 < 0 || this.x + this.size/2 > width) {
       this.vx = -this.vx;
@@ -53,10 +54,12 @@ class Square {
     }
   }
 
+  // Plays note.
   playNote() {
     this.synth.play(this.note, 0.2, 0, 0.2);
   }
 
+  // The fill color changes to a random color.
   changeColor() {
     this.fill = {
       r: random(100,200),
@@ -64,12 +67,13 @@ class Square {
       b: random(100,200),
     };
   }
-
+  // The shape size expands.
   grow(){
     this.size = this.size + this.growth;
 
   }
 
+  // Displays the shape
   display() {
     push();
     noStroke();
