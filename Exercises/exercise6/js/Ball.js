@@ -59,16 +59,15 @@ class Ball {
 
   changeColor() {
     this.fill = {
-      r: random(100,255),
-      g: random(100,255),
-      b: random(100,255),
+      r: random(200,255),
+      g: random(200,255),
+      b: random(200,255),
     };
   }
 
   grow(){
     this.size = this.size + this.growth;
   }
-
 
   display() {
     push();
