@@ -7,6 +7,11 @@ class Food {
     this.vx = 0;
     this.vy = 0;
     this.speed = undefined;
+    // The border of the background grid.
+    this.borderLeft = 70;
+    this.borderRight = 950;
+    this.borderTop = 70;
+    this.borderBottom = 590;
   }
 
   move(){
@@ -15,17 +20,17 @@ class Food {
   }
 
   wrap() {
-    if (this.x > width) {
-      this.x = width;
+    if (this.x > this.borderRight) {
+      this.x = this.borderRight;
     }
-    else if (this.x < 0) {
-      this.x = 0;
+    else if (this.x < this.borderLeft) {
+      this.x = this.borderLeft;
     }
-    if (this.y > height) {
-      this.y = height;
+    if (this.y > this.borderBottom) {
+      this.y = this.borderBottom;
     }
-    else if (this.y < 0){
-      this.y = 0;
+    else if (this.y < this.borderTop){
+      this.y = this.borderTop;
     }
   }
 

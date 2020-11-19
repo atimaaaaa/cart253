@@ -11,14 +11,20 @@ Help Antonio the ant to grab all the bread before the time runs out!
 "use strict"
 
 let state = `simulation`;
+
 let score = 0;
+
 let ant;
+let foods = [];
+let numCherries = 3;
+let numRocks = 6;
+let numBread = 2;
 
 
-let coloredTile = {
+let tile = {
   size: 60,
   segmentsX: 8,
-  segmentsY: 15,
+  segmentsY: 10,
   spacingX: 120,
   spacingY: 60,
   fill: {
@@ -28,10 +34,10 @@ let coloredTile = {
   }
 }
 
-let object = {
-  cherries:[],
-  numCherries: 3,
-}
+// let object = {
+//   cherries:[],
+//   numCherries: 3,
+// }
 
 function setup() {
   createCanvas(1200,800);
@@ -42,13 +48,28 @@ function setup() {
   ant = new Ant(x,y);
 
 
-  // Creates cherries by counting up to the number of cherries
-  for (let i = 0; i < object.numCherries; i++) {
-    // Create variables for the cherry argument
+  //  Creates cherries by counting up to the number of cherries
+  for (let i = 0; i < numCherries; i++) {
     let x = random(0, width);
     let y = random(0, height);
     let cherry = new Cherry(x,y);
-    object.cherries.push(cherry);
+    foods.push(cherry);
+  }
+
+  //  Creates rocks by counting up to the number of rocks
+  for (let i = 0; i < numRocks; i++) {
+    let x = random(0, width);
+    let y = random(0, height);
+    let rock = new Rock(x,y);
+    foods.push(rock);
+  }
+
+  //  Creates bread by counting up to the number of bread
+  for (let i = 0; i < numBread; i++) {
+    let x = random(0, width);
+    let y = random(0, height);
+    let bread = new Bread(x,y);
+    foods.push(bread);
   }
 }
 
@@ -75,63 +96,24 @@ function draw() {
   //Displays score.
   text(`score - ${score}`, 1000, 50);
 
-
-  //Display blue tiling
-  tiling();
-
-  // Loop through all the cherries and displays them.
-  for (let i = 0; i < object.cherries.length; i++) {
-      let cherry = object.cherries[i];
-      //Check if the cherry is captured
-      if (cherry.captured === false) {
-      cherry.display();
-
-      // If ant captures cherry , a new cherry appears.
-      if (cherry.checkCapture(ant)) {
-        let x = random(0, width);
-        let y = random(0, height);
-        let cherry = new Cherry(x,y);
-        object.cherries.push(cherry);
-        score ++;
-      }
-    }
-  }
-}
-
-function tiling() {
-  // Draws background tiles
-  // for (let i = 0; i < coloredTile.segments; i++) {
-  //   push();
-  //   noStroke();
-  //   fill(coloredTile.fill.r, coloredTile.fill.g, coloredTile.fill.b);
-  //   rect(x,y, coloredTile.size);
-  //   x = x + coloredTile.spacing;
-  //   pop();
+  // // Loop through all the cherries and displays them.
+  // for (let i = 0; i < object.cherries.length; i++) {
+  //     let cherry = object.cherries[i];
+  //     //Check if the cherry is captured
+  //     if (cherry.captured === false) {
+  //     cherry.display();
+  //
+  //     // If ant captures cherry , a new cherry appears.
+  //     if (cherry.checkCapture(ant)) {
+  //       let x = random(0, width);
+  //       let y = random(0, height);
+  //       let cherry = new Cherry(x,y);
+  //       object.cherries.push(cherry);
+  //       score ++;
+  //     }
+  //   }
   // }
-  let x = 0;
-  let y = 60;
-
-  for (let i = 0; i < coloredTile.segmentsY; i++) {
-    if (i % 2 === 0) {
-      x = 60;
-    }
-    else {
-      x = 120;
-    }
-    // Draws background tiles
-    for (let j = 0; j < coloredTile.segmentsX; j++) {
-      push();
-      noStroke();
-      fill(coloredTile.fill.r, coloredTile.fill.g, coloredTile.fill.b);
-      rect(x,y, coloredTile.size);
-      x = x + coloredTile.spacingX;
-      pop();
-    }
-    y = y + coloredTile.spacingY;
-  }
 }
-
-
 
 // Displaying the states.
 function title() {
@@ -139,11 +121,20 @@ function title() {
 }
 
 function simulation() {
+
+  //Display blue tiling
+  tiling();
   //Display Antonio the ant.
   ant.handleInput();
   ant.wrap();
   ant.display();
 
+  for (let i = 0; i < foods.length; i++) {
+    let food = foods[i];
+    food.move();
+    food.wrap();
+    food.display();
+  }
 }
 
 function win() {
@@ -153,6 +144,32 @@ function win() {
 function lose() {
   displayText(`YOU DIED. VERY SAD!`);
 }
+
+// Draws background tiles
+function tiling() {
+  let x = 0;
+  let y = 60;
+
+    for (let i = 0; i < tile.segmentsY; i++) {
+      if (i % 2 === 0) {
+      x = 60;
+      }
+    else {
+      x = 120;
+    }
+    // Draws horizontal tiles
+    for (let j = 0; j < tile.segmentsX; j++) {
+      push();
+      noStroke();
+      fill(tile.fill.r, tile.fill.g, tile.fill.b);
+      rect(x,y, tile.size);
+      x = x + tile.spacingX;
+      pop();
+    }
+    y = y + tile.spacingY;
+  }
+}
+
 
 function displayText(string){
   push();
