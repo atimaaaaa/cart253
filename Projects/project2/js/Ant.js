@@ -5,35 +5,35 @@ class Ant {
     this.size = 20;
     this.vx = 0;
     this.vy = 0;
-    this.speed = 5;
+    this.speed = 60;
     this.spacing = 15;
     this.alive = true;
   }
 
   handleInput() {
-      //Horizontal movement
-      if (keyIsDown(LEFT_ARROW)) {
-        this.vx = -this.speed;
-      }
-      else if (keyIsDown(RIGHT_ARROW)) {
-        this.vx = this.speed;
-      }
-      // No movement if left or right arrow are pressed.
-      else {
-        this.vx = 0;
-      }
-
-      //Vertical movement
-      if (keyIsDown(UP_ARROW)) {
-        this.vy = -this.speed;
-      }
-      else if (keyIsDown(DOWN_ARROW)) {
-        this.vy = this.speed;
-      }
-      // No movement if up or bottom arrow are pressed.
-      else {
-        this.vy = 0;
-      }
+      // //Horizontal movement
+      // if (keyIsDown(LEFT_ARROW)) {
+      //   this.vx = -this.speed;
+      // }
+      // else if (keyIsDown(RIGHT_ARROW)) {
+      //   this.vx = this.speed;
+      // }
+      // // No movement if left or right arrow are pressed.
+      // else {
+      //   this.vx = 0;
+      // }
+      //
+      // //Vertical movement
+      // if (keyIsDown(UP_ARROW)) {
+      //   this.vy = -this.speed;
+      // }
+      // else if (keyIsDown(DOWN_ARROW)) {
+      //   this.vy = this.speed;
+      // }
+      // // No movement if up or bottom arrow are pressed.
+      // else {
+      //   this.vy = 0;
+      // }
     }
 
     move() {
@@ -51,7 +51,7 @@ class Ant {
       if (this.y > height) {
         this.y = height;
       }
-      else if (this.y < 0){
+      else if (this.y < 0) {
         this.y = 0;
       }
     }
@@ -65,6 +65,33 @@ class Ant {
       ellipse(this.x + this.spacing, this.y, this.size,this.size);
       ellipse(this.x - this.spacing, this.y, this.size,this.size);
       pop();
+    }
+
+    keyPressed() {
+      console.log(`example`);
+      //Horizontal movement
+      if (keyCode === LEFT_ARROW) {
+        this.vx = -this.speed;
+      }
+      else if (keyCode === RIGHT_ARROW) {
+        this.vx = this.speed;
+      }
+      // No movement if left or right arrow are pressed.
+      else {
+        this.vx = 0;
+      }
+
+      //Vertical movement
+      if (keyCode === UP_ARROW) {
+        this.vy = -this.speed;
+      }
+      else if (keyCode === DOWN_ARROW) {
+        this.vy = this.speed;
+      }
+      // No movement if up or bottom arrow are pressed.
+      else {
+        this.vy = 0;
+      }
     }
 
   }

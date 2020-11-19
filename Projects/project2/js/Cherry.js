@@ -42,7 +42,7 @@ class Cherry extends Food {
     push();
     noStroke();
     fill(this.baseColor.r, this.baseColor.g, this.baseColor.b);
-    ellipse(this.x, this.y, this.width);
+    ellipse(this.x, this.y+20, this.width);
     pop();
   }
 }
