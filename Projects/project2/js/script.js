@@ -2,7 +2,7 @@
 Get that bread project
 Atima Ng
 
-Here is a description of this template p5 project.
+Help Ant Antonio to grab all the bread before the time runs out!
 **************************************************/
 
 // setup()
@@ -10,7 +10,9 @@ Here is a description of this template p5 project.
 // Description of setup() goes here.
 "use strict"
 
+let state = `simulation`;
 let score = 0;
+let ant;
 
 let coloredTile = {
   size: 60,
@@ -28,18 +30,14 @@ let object = {
   numCherries: 3,
 }
 
-let ant = {
-  x: 500,
-  y: 500,
-  size: 20,
-  vx: 0,
-  vy: 0,
-  speed: 5,
-  spacing:15,
-}
-
 function setup() {
   createCanvas(1200,800);
+
+  //Creates the ant.
+  let x = width/2;
+  let y = height/2;
+  ant = new Ant(x,y);
+
 
   // Creates cherries by counting up to the number of cherries
   for (let i = 0; i < object.numCherries; i++) {
@@ -56,16 +54,31 @@ function setup() {
 // Description of draw() goes here.
 function draw() {
   background(120);
+
+  //Calling tates
+  if (state ===`title`) {
+    title();
+  }
+  if (state ===`simulation`) {
+    simulation();
+  }
+  if (state ===`win`) {
+    win();
+  }
+  if (state ===`lose`) {
+    lose();
+  }
+
   //Displays score.
   text(`score - ${score}`, 1000, 50);
+
+  //Display tiling
   tiling(60,60);
   tiling(120,120);
   tiling(60,180);
   tiling(120,240);
   tiling(60,300);
 
-  antMovement();
-  antDisplay();
 
   // Loop through all the cherries and displays them.
   for (let i = 0; i < object.cherries.length; i++) {
@@ -84,7 +97,6 @@ function draw() {
       }
     }
   }
-
 }
 
 function tiling(x,y) {
@@ -100,44 +112,38 @@ function tiling(x,y) {
   }
 }
 
-function antMovement(){
-  //Horizontal movement
-  if (keyIsDown(LEFT_ARROW)) {
-    ant.vx = -ant.speed;
-  }
-  else if (keyIsDown(RIGHT_ARROW)) {
-    ant.vx = ant.speed;
-  }
-  // No movement if left or right arrow are pressed.
-  else {
-    ant.vx = 0;
-  }
-
-  //Vertical movement
-  if (keyIsDown(UP_ARROW)) {
-    ant.vy = -ant.speed;
-  }
-  else if (keyIsDown(DOWN_ARROW)) {
-    ant.vy = ant.speed;
-  }
-  // No movement if up or bottom arrow are pressed.
-  else {
-    ant.vy = 0;
-  }
+// Displaying the states.
+function title() {
+  displayText(`GET THAT BREAD`);
 }
 
-function antDisplay() {
-    // Ant movement.
-    ant.x += ant.vx;
-    ant.y += ant.vy;
+function simulation() {
+  //Display Antonio the ant.
+  ant.handleInput();
+  ant.move();
+  ant.wrap();
+  ant.display();
+}
 
-    // Draws ant.
-    push();
-    // Draws three ellipses for the ant body.
-    fill(0);
-    noStroke();
-    ellipse(ant.x, ant.y, ant.size,ant.size);
-    ellipse(ant.x + ant.spacing, ant.y, ant.size,ant.size);
-    ellipse(ant.x - ant.spacing, ant.y, ant.size,ant.size);
-    pop();
+function win() {
+  displayText(`YOU ARE A HEATHLY ANT`);
+}
+
+function lose() {
+  displayText(`YOU DIED. VERY SAD!`);
+}
+
+function displayText(string){
+  push();
+  textAlign(CENTER,CENTER);
+  textSize(32);
+  fill(255);
+  text(string, width/2, height/2);
+  pop();
+}
+
+function keyPressed(){
+  if(state === `title`) {
+    state = `simulation`;
+  }
 }
