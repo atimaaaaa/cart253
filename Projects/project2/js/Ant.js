@@ -8,9 +8,14 @@ class Ant {
     this.speed = 60;
     this.spacing = 15;
     this.alive = true;
+    // The border of the background grid.
+    this.borderLeft = 120;
+    this.borderRight = 1020;
+    this.borderTop = 90;
+    this.borderBottom = 630;
   }
 
-  handleInput() {
+  //handleInput() {
       // //Horizontal movement
       // if (keyIsDown(LEFT_ARROW)) {
       //   this.vx = -this.speed;
@@ -34,7 +39,25 @@ class Ant {
       // else {
       //   this.vy = 0;
       // }
-    }
+    //}
+
+    // // Loop through all the cherries and displays them.
+    // for (let i = 0; i < object.cherries.length; i++) {
+    //     let cherry = object.cherries[i];
+    //     //Check if the cherry is captured
+    //     if (cherry.captured === false) {
+    //     cherry.display();
+    //
+    //     // If ant captures cherry , a new cherry appears.
+    //     if (cherry.checkCapture(ant)) {
+    //       let x = random(0, width);
+    //       let y = random(0, height);
+    //       let cherry = new Cherry(x,y);
+    //       object.cherries.push(cherry);
+    //       score ++;
+    //     }
+    //   }
+    // }
 
     move() {
       this.x += this.vx;
@@ -42,17 +65,17 @@ class Ant {
     }
 
     wrap() {
-      if (this.x > width) {
-        this.x = width;
+      if (this.x > this.borderRight) {
+        this.x = this.borderRight;
       }
-      else if (this.x < 0) {
-        this.x = 0;
+      else if (this.x < this.borderLeft) {
+        this.x = this.borderLeft;
       }
-      if (this.y > height) {
-        this.y = height;
+      if (this.y > this.borderBottom) {
+        this.y = this.borderBottom;
       }
-      else if (this.y < 0) {
-        this.y = 0;
+      else if (this.y < this.borderTop){
+        this.y = this.borderTop;
       }
     }
 

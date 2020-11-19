@@ -44,7 +44,7 @@ function setup() {
 
   //Creates the ant.
   let x = width/2;
-  let y = height/2;
+  let y = height/2 - 10;
   ant = new Ant(x,y);
 
 
@@ -124,11 +124,13 @@ function simulation() {
 
   //Display blue tiling
   tiling();
+
   //Display Antonio the ant.
-  ant.handleInput();
   ant.wrap();
   ant.display();
 
+
+  //Display food items
   for (let i = 0; i < foods.length; i++) {
     let food = foods[i];
     food.move();
@@ -152,10 +154,10 @@ function tiling() {
 
     for (let i = 0; i < tile.segmentsY; i++) {
       if (i % 2 === 0) {
-      x = 60;
+      x = 90;
       }
     else {
-      x = 120;
+      x = 150;
     }
     // Draws horizontal tiles
     for (let j = 0; j < tile.segmentsX; j++) {

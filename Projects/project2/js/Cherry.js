@@ -16,17 +16,17 @@ class Cherry extends Food {
       g:0,
       b:0,
     };
-    this.captured = false;
+    this.eaten = false;
   }
 
-  checkCapture(ant){
-     let d = dist(ant.x, ant.y, this.x, this.y);
-     if (d < ant.size/2 + this.size/2){
-       this.captured = true;
-       return true;
-    }
-    return false;
-  }
+  // checkCapture(ant){
+  //    let d = dist(ant.x, ant.y, this.x, this.y);
+  //    if (d < ant.size/2 + this.size/2){
+  //      this.captured = true;
+  //      return true;
+  //   }
+  //   return false;
+  // }
 
   //Displays cherry on the canvas
   display() {

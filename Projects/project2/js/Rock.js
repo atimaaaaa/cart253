@@ -9,7 +9,7 @@ class Rock extends Food {
       g:219,
       b:214,
     };
-    this.captured = false;
+    this.eaten = false;
   }
 
   checkCapture(ant){
