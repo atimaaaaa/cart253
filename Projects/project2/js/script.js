@@ -14,6 +14,8 @@ let state = `simulation`;
 
 let score = 0;
 
+
+
 let ant;
 let foods = [];
 let numCherries = 3;
@@ -40,10 +42,10 @@ let tile = {
 // }
 
 function setup() {
-  createCanvas(1200,800);
+  createCanvas(1300,800);
 
   //Creates the ant.
-  let x = width/2;
+  let x = width/2 - 50;
   let y = height/2 - 10;
   ant = new Ant(x,y);
 
@@ -75,7 +77,7 @@ function setup() {
 
 // draw()
 //
-// Description of draw() goes here.
+// Displays the different states when called.
 function draw() {
   background(120);
 
@@ -92,9 +94,6 @@ function draw() {
   if (state ===`lose`) {
     lose();
   }
-
-  //Displays score.
-  text(`score - ${score}`, 1000, 50);
 
   // // Loop through all the cherries and displays them.
   // for (let i = 0; i < object.cherries.length; i++) {
@@ -121,9 +120,10 @@ function title() {
 }
 
 function simulation() {
-
   //Display blue tiling
   tiling();
+  displayScore();
+  displayTitle();
 
   //Display Antonio the ant.
   ant.wrap();
@@ -172,9 +172,31 @@ function tiling() {
   }
 }
 
+//Displays score.
+function displayScore(){
+  push();
+  textFont(`Blenny`);
+  fill(245,190,90); // brown color
+  textSize(28);
+  text(`SCORE - ${score}`, 1100, 80);
+  pop();
+}
+
+//Displays the title.
+function displayTitle(){
+  push();
+  textFont(`Blenny`);
+  textSize(50);
+  fill(245,190,90); // brown color
+  textLeading(45);
+  text(`GET\nTHAT\nBREAD`, 1100, 570);
+  pop();
+}
+
 
 function displayText(string){
   push();
+  textFont(`Blenny`);
   textAlign(CENTER,CENTER);
   textSize(32);
   fill(255);
