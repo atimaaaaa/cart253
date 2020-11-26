@@ -29,6 +29,8 @@ let tileBlue = {
   segmentsY: 10,
   spacingX: 120,
   spacingY: 60,
+  columns: 16,
+  rows: 10,
   fill: {
     r: 46,
     g: 137,
@@ -57,32 +59,32 @@ let tileWhite = {
 function setup() {
   createCanvas(1300,800);
 
-  //Creates the ant.
-  let x = random(0,tileBlue.segmentsX); //?
-  let y = random(0,tileBlue.segmentsY); //?
+  //Creates ant centered on the tile
+  let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
+  let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/2;
   ant = new Ant(x,y);
 
 
   // Creates cherries by counting up to the number of cherries
   for (let i = 0; i < numCherries; i++) {
-    let x = random(0, width);
-    let y = random(0, height);
+    let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
+    let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/4;
     let cherry = new Cherry(x,y);
     foods.push(cherry);
   }
 
   //  Creates rocks by counting up to the number of rocks
   for (let i = 0; i < numRocks; i++) {
-    let x = random(0, width);
-    let y = random(0, height);
+    let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
+    let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/2;
     let rock = new Rock(x,y);
     foods.push(rock);
   }
 
   //  Creates bread by counting up to the number of bread
   for (let i = 0; i < numBread; i++) {
-    let x = random(0, width);
-    let y = random(0, height);
+    let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
+    let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/2;
     let bread = new Bread(x,y);
     foods.push(bread);
   }
@@ -133,29 +135,35 @@ function title() {
 }
 
 function simulation() {
-  //Display blue tiling
-
+  //Display tiling
   tilingBlue();
   tilingWhite();
+  //Display design elements
   displayScore();
   displayTimer();
   displayTitle();
-
-
   //Display Antonio the ant.
-  // ant.checkEat();
   ant.wrap();
   ant.display();
+  //Check win
+  // checkWin();
 
-
-  //Display food items
+  //Display foods
   for (let i = 0; i < foods.length; i++) {
     let food = foods[i];
     food.move();
     food.wrap();
     food.display();
+    ant.checkEat(food);
   }
 }
+
+// function checkWin() {
+//   if (bread === 20){
+//     state = `win`;
+//   }
+//   //capture 20 breads, win
+// }
 
 function win() {
   displayText(`YOU ARE A HEATHLY ANT`);
@@ -215,7 +223,7 @@ function tilingWhite() {
   }
 }
 
-//Displays score.
+//Displays score on the canvas.
 function displayScore(){
   push();
   textFont(`Blenny`);
@@ -224,7 +232,7 @@ function displayScore(){
   text(`SCORE - ${score}`, 1100, 80);
   pop();
 }
-
+//Displays timer on the canvas.
 function displayTimer(){
   push();
   textFont(`Blenny`);
@@ -233,14 +241,14 @@ function displayTimer(){
   text(`timer - ${timer}`, 1100, 120);
 
 
-if (frameCount % 60 == 0 && timer > 0) {
-  timer --;
-}
-if (timer == 0) {
-  text("GAME OVER", width, height);
-}
-  pop();
-}
+  if (frameCount % 60 == 0 && timer > 0) {
+    timer --;
+  }
+  if (timer == 0) {
+    text("GAME OVER", width, height);
+  }
+    pop();
+  }
 
 //Displays the title.
 function displayTitle(){

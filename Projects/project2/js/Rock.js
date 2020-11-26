@@ -11,14 +11,7 @@ class Rock extends Food {
     };
   }
 
-  checkCapture(ant){
-     let d = dist(ant.x, ant.y, this.x, this.y);
-     if (d < ant.size/2 + this.size/2){
-       this.captured = true;
-       return true;
-    }
-    return false;
-  }
+
 
   //Displays rock on the canvas
   display() {

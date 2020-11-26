@@ -11,7 +11,8 @@ class Food {
     this.borderLeft = 10;
     this.borderRight = 950;
     this.borderTop = 10;
-    this.borderBottom = 560;
+    this.borderBottom = 600;
+
     this.eaten = false;
   }
 
@@ -36,6 +37,5 @@ class Food {
   }
 
   display(){
-
   }
 }

@@ -1,8 +1,8 @@
 class Bread extends Food {
   constructor(x,y) {
     super(x,y);
-    this.width = 30;
-    this.height = 30;
+    this.width = 20;
+    this.height = 20;
     this.speed = 5;
     this.strokeColor = {
       r:183,
@@ -16,15 +16,6 @@ class Bread extends Food {
     };
   }
 
-  checkCapture(ant){
-     let d = dist(ant.x, ant.y, this.x, this.y);
-     if (d < ant.size/2 + this.size/2){
-       this.captured = true;
-       return true;
-    }
-    return false;
-  }
-
   //Displays bread on the canvas
   display() {
     super.display();
@@ -32,6 +23,7 @@ class Bread extends Food {
     //Displays bread
     push();
     strokeWeight(5);
+    rectMode(CENTER);
     stroke(this.strokeColor.r, this.strokeColor.g,this.strokeColor.b);
     fill(this.baseColor.r, this.baseColor.g, this.baseColor.b);
     rect(this.x, this.y, this.width, this.height);
