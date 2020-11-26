@@ -16,62 +16,45 @@ class Ant {
     this.antenaWidth = 2;
     this.antenaHeight = 10;
     // For the wrap function.
-    this.borderLeft = 30;
-    this.borderRight = 930;
-    this.borderTop = 30;
-    this.borderBottom = 570;
+    this.borderLeft = 90;
+    this.borderRight = 960;
+    this.borderTop = 90;
+    this.borderBottom = 630;
   }
 
   checkEat(food){
     let d = dist(this.x, this.y, food.x, food.y);
     //Check overlap with foods.
     if (d < (this.size*3)/2 + food.width/2){
-      //Check overlap cherry.
+      //Check overlap between cherry and ant.
       if (food instanceof Cherry) {
-
-          let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
-          let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/2;
+        let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
+        let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/4;
           food.x = x;
           food.y = y;
           score+=2;
       }
-      //Check overlap cherry.
+      //Check overlap between bread and ant.
       else if (food instanceof Bread) {
-
+        let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
+        let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/2;
+        food.x = x;
+        food.y = y;
+        score+=20;
       }
-      //Check overlap cherry.
-      else if (food instanceof Rock) {
+      //Check overlap between rock and ant.
+      else if(food instanceof Rock) {
+        let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
+        let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/2;
+        //Ant returns to the start of the grid
+        this.x = 1;
+        this.y = 1;
+        food.x = x;
+        food.y = y;
+        score-= 20;
       }
     }
   }
-
-  // If ant captures cherry , a new cherry appears.
- //     if (cherry.checkCapture(ant)) {
- //       let x = random(0, width);
- //       let y = random(0, height);
- //       let cherry = new Cherry(x,y);
- //       object.cherries.push(cherry);
- //       score ++;
-
-
-
-    // // Loop through all the cherries and displays them.
-    // for (let i = 0; i < object.cherries.length; i++) {
-    //     let cherry = object.cherries[i];
-    //     //Check if the cherry is captured
-    //     if (cherry.captured === false) {
-    //     cherry.display();
-    //
-    //     // If ant captures cherry , a new cherry appears.
-    //     if (cherry.checkCapture(ant)) {
-    //       let x = random(0, width);
-    //       let y = random(0, height);
-    //       let cherry = new Cherry(x,y);
-    //       object.cherries.push(cherry);
-    //       score ++;
-    //     }
-    //   }
-    // }
 
     move() {
       this.x += this.vx;
@@ -113,7 +96,7 @@ class Ant {
       rect(this.x - this.spacing - this.legSpacing, (this.y + 10),this.legWidth, this.legHeight);
       rect(this.x - this.spacing + this.legSpacing, (this.y + 10),this.legWidth, this.legHeight);
       pop();
-      //ANTena
+      // //ANTena
       // push();
       // fill(0);
       // noStroke();

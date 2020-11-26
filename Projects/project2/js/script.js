@@ -14,12 +14,12 @@ let state = `simulation`;
 
 let score = 0;
 
-let timer = 120;
+let timer = 100;
 
 let ant;
 let foods = [];
 let numCherries = 3;
-let numRocks = 6;
+let numRocks = 25;
 let numBread = 2;
 
 
@@ -136,8 +136,11 @@ function title() {
 
 function simulation() {
   //Display tiling
+  push();
+  translate(60,60);
   tilingBlue();
   tilingWhite();
+  pop();
   //Display design elements
   displayScore();
   displayTimer();

@@ -1,27 +1,24 @@
 class Rock extends Food {
   constructor(x,y) {
     super(x,y);
-    this.width = 20;
-    this.height = 20;
+    this.width = 30;
+    this.height = 10;
     this.speed = 2;
     this.baseColor = {
-      r:157,
-      g:135,
-      b:132,
+      r:135,
+      g:109,
+      b:100,
     };
   }
-
-
 
   //Displays rock on the canvas
   display() {
     super.display();
-
     //Displays rock
     push();
     noStroke();
     fill(this.baseColor.r, this.baseColor.g, this.baseColor.b);
-    ellipse(this.x, this.y, this.width);
+    ellipse(this.x, this.y, this.width,this.height);
     pop();
   }
 }
