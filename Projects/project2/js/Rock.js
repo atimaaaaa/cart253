@@ -5,11 +5,10 @@ class Rock extends Food {
     this.height = 20;
     this.speed = 2;
     this.baseColor = {
-      r:217,
-      g:219,
-      b:214,
+      r:157,
+      g:135,
+      b:132,
     };
-    this.eaten = false;
   }
 
   checkCapture(ant){

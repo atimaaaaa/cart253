@@ -2,18 +2,42 @@ class Ant {
   constructor(x,y){
     this.x = x;
     this.y = y;
-    this.size = 20;
+    this.size = 15;
     this.vx = 0;
     this.vy = 0;
     this.speed = 60;
-    this.spacing = 15;
+    this.spacing = 12;
     this.alive = true;
-    // The border of the background grid.
-    this.borderLeft = 120;
-    this.borderRight = 1020;
-    this.borderTop = 90;
-    this.borderBottom = 630;
+    //Leg
+    this.legWidth = 2;
+    this.legHeight = 5;
+    this.legSpacing = 2;
+    //ANTenna
+    this.antenaWidth = 2;
+    this.antenaHeight = 10;
+    // For the wrap function.
+    this.borderLeft = 0;
+    this.borderRight = 1000;
+    this.borderTop = 0;
+    this.borderBottom = 570;
   }
+
+  checkEat(bread){
+    let d = dist(this.x, this.y, bread.x, bread.y);
+    if (d < (this.size*3)/2 + bread.width/2){
+      bread.eaten = true;
+    }
+    bread.eaten = false;
+    score ++
+  }
+
+  // If ant captures cherry , a new cherry appears.
+ //     if (cherry.checkCapture(ant)) {
+ //       let x = random(0, width);
+ //       let y = random(0, height);
+ //       let cherry = new Cherry(x,y);
+ //       object.cherries.push(cherry);
+ //       score ++;
 
   //handleInput() {
       // //Horizontal movement
@@ -65,33 +89,50 @@ class Ant {
     }
 
     wrap() {
-      if (this.x > this.borderRight) {
+      if (this.x >= this.borderRight) {
         this.x = this.borderRight;
       }
-      else if (this.x < this.borderLeft) {
+      else if (this.x <= this.borderLeft) {
         this.x = this.borderLeft;
       }
-      if (this.y > this.borderBottom) {
+      if (this.y >= this.borderBottom) {
         this.y = this.borderBottom;
       }
-      else if (this.y < this.borderTop){
+      else if (this.y <= this.borderTop){
         this.y = this.borderTop;
       }
     }
 
     display() {
       push();
-      // Draws three ellipses for the ant body.
       fill(0);
       noStroke();
+      rectMode(CENTER);
+      //Body
       ellipse(this.x, this.y, this.size,this.size);
       ellipse(this.x + this.spacing, this.y, this.size,this.size);
       ellipse(this.x - this.spacing, this.y, this.size,this.size);
+      //Legs
+        //Middle
+      rect(this.x - this.legSpacing, (this.y + 10),this.legWidth, this.legHeight);
+      rect(this.x + this.legSpacing, (this.y + 10),this.legWidth, this.legHeight);
+        //Far right
+      rect(this.x + this.spacing - this.legSpacing, (this.y + 10),this.legWidth, this.legHeight);
+      rect(this.x + this.spacing + this.legSpacing, (this.y + 10),this.legWidth, this.legHeight);
+        //Far left
+      rect(this.x - this.spacing - this.legSpacing, (this.y + 10),this.legWidth, this.legHeight);
+      rect(this.x - this.spacing + this.legSpacing, (this.y + 10),this.legWidth, this.legHeight);
       pop();
+      //ANTena
+      // push();
+      // fill(0);
+      // noStroke();
+      //
+      // rect(this.x + this.spacing, this.y - 15,this.antenaWidth, this.antenaHeight);
+      // pop();
     }
 
     keyPressed() {
-      console.log(`example`);
       //Horizontal movement
       if (keyCode === LEFT_ARROW) {
         this.vx = -this.speed;
@@ -116,5 +157,4 @@ class Ant {
         this.vy = 0;
       }
     }
-
-  }
+}

@@ -14,7 +14,7 @@ let state = `simulation`;
 
 let score = 0;
 
-
+let timer = 120;
 
 let ant;
 let foods = [];
@@ -23,16 +23,29 @@ let numRocks = 6;
 let numBread = 2;
 
 
-let tile = {
+let tileBlue = {
   size: 60,
   segmentsX: 8,
   segmentsY: 10,
   spacingX: 120,
   spacingY: 60,
   fill: {
-    r: 0,
-    g: 0,
-    b: 255,
+    r: 46,
+    g: 137,
+    b: 178,
+  }
+}
+
+let tileWhite = {
+  size: 60,
+  segmentsX: 8,
+  segmentsY: 10,
+  spacingX: 120,
+  spacingY: 60,
+  fill: {
+    r: 237,
+    g: 233,
+    b: 225,
   }
 }
 
@@ -45,12 +58,12 @@ function setup() {
   createCanvas(1300,800);
 
   //Creates the ant.
-  let x = width/2 - 50;
-  let y = height/2 - 10;
+  let x = random(0,tileBlue.segmentsX); //?
+  let y = random(0,tileBlue.segmentsY); //?
   ant = new Ant(x,y);
 
 
-  //  Creates cherries by counting up to the number of cherries
+  // Creates cherries by counting up to the number of cherries
   for (let i = 0; i < numCherries; i++) {
     let x = random(0, width);
     let y = random(0, height);
@@ -121,11 +134,16 @@ function title() {
 
 function simulation() {
   //Display blue tiling
-  tiling();
+
+  tilingBlue();
+  tilingWhite();
   displayScore();
+  displayTimer();
   displayTitle();
 
+
   //Display Antonio the ant.
+  // ant.checkEat();
   ant.wrap();
   ant.display();
 
@@ -148,27 +166,52 @@ function lose() {
 }
 
 // Draws background tiles
-function tiling() {
+function tilingBlue() {
   let x = 0;
-  let y = 60;
+  let y = 0; // before y = 60
 
-    for (let i = 0; i < tile.segmentsY; i++) {
+    for (let i = 0; i < tileBlue.segmentsY; i++) {
       if (i % 2 === 0) {
-      x = 90;
+      x = 0; // before x = 90;
       }
     else {
-      x = 150;
+      x = 60; //before x = 150;
     }
     // Draws horizontal tiles
-    for (let j = 0; j < tile.segmentsX; j++) {
+    for (let j = 0; j < tileBlue.segmentsX; j++) {
       push();
       noStroke();
-      fill(tile.fill.r, tile.fill.g, tile.fill.b);
-      rect(x,y, tile.size);
-      x = x + tile.spacingX;
+      fill(tileBlue.fill.r, tileBlue.fill.g, tileBlue.fill.b);
+      rect(x,y, tileBlue.size);
+      x = x + tileBlue.spacingX;
       pop();
     }
-    y = y + tile.spacingY;
+    y = y + tileBlue.spacingY;
+  }
+}
+
+// Draws background white tiles
+function tilingWhite() {
+  let x = 60;
+  let y = 0; // before y = 60
+
+    for (let i = 0; i < tileWhite.segmentsY; i++) {
+      if (i % 2 === 0) {
+      x = 60; // before x = 90;
+      }
+    else {
+      x = 0; //before x = 150;
+    }
+    // Draws horizontal tiles
+    for (let j = 0; j < tileWhite.segmentsX; j++) {
+      push();
+      noStroke();
+      fill(tileWhite.fill.r, tileWhite.fill.g, tileWhite.fill.b);
+      rect(x,y, tileWhite.size);
+      x = x + tileWhite.spacingX;
+      pop();
+    }
+    y = y + tileWhite.spacingY;
   }
 }
 
@@ -176,9 +219,26 @@ function tiling() {
 function displayScore(){
   push();
   textFont(`Blenny`);
-  fill(245,190,90); // brown color
-  textSize(28);
+  fill(245,190,90); // bread brown color
+  textSize(24);
   text(`SCORE - ${score}`, 1100, 80);
+  pop();
+}
+
+function displayTimer(){
+  push();
+  textFont(`Blenny`);
+  fill(245,190,90); // bread brown color
+  textSize(24);
+  text(`timer - ${timer}`, 1100, 120);
+
+
+if (frameCount % 60 == 0 && timer > 0) {
+  timer --;
+}
+if (timer == 0) {
+  text("GAME OVER", width, height);
+}
   pop();
 }
 
@@ -192,7 +252,6 @@ function displayTitle(){
   text(`GET\nTHAT\nBREAD`, 1100, 570);
   pop();
 }
-
 
 function displayText(string){
   push();

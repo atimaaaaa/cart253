@@ -8,10 +8,11 @@ class Food {
     this.vy = 0;
     this.speed = undefined;
     // The border of the background grid.
-    this.borderLeft = 100;
-    this.borderRight = 1020;
-    this.borderTop = 70;
-    this.borderBottom = 590;
+    this.borderLeft = 10;
+    this.borderRight = 950;
+    this.borderTop = 10;
+    this.borderBottom = 560;
+    this.eaten = false;
   }
 
   move(){

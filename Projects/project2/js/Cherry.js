@@ -16,7 +16,6 @@ class Cherry extends Food {
       g:0,
       b:0,
     };
-    this.eaten = false;
   }
 
   // checkCapture(ant){

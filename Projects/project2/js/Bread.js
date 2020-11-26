@@ -14,7 +14,6 @@ class Bread extends Food {
       g:190,
       b:90,
     };
-    this.eaten = false;
   }
 
   checkCapture(ant){
