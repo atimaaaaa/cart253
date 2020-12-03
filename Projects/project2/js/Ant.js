@@ -17,9 +17,9 @@ class Ant {
     this.antenaHeight = 10;
     // For the wrap function.
     this.borderLeft = 90;
-    this.borderRight = 960;
-    this.borderTop = 90;
-    this.borderBottom = 630;
+    this.borderRight = 990;
+    this.borderTop = 150;
+    this.borderBottom = 660;
   }
 
   checkEat(food){
@@ -30,8 +30,8 @@ class Ant {
       if (food instanceof Cherry) {
         let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
         let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/4;
-          food.x = x;
-          food.y = y;
+          food.x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;;
+          food.y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/4;;
           score+=2;
       }
       //Check overlap between bread and ant.
@@ -47,8 +47,8 @@ class Ant {
         let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
         let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/2;
         //Ant returns to the start of the grid
-        this.x = 1;
-        this.y = 1;
+        this.x = 0;
+        food.y = 60;
         food.x = x;
         food.y = y;
         score-= 20;

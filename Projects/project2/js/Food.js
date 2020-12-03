@@ -9,9 +9,9 @@ class Food {
     this.speed = undefined;
     // The border of the background grid.
     this.borderLeft = 90;
-    this.borderRight = 960;
-    this.borderTop = 90;
-    this.borderBottom = 630;
+    this.borderRight = 1100;
+    this.borderTop = 150;
+    this.borderBottom = 900;
 
     this.eaten = false;
   }

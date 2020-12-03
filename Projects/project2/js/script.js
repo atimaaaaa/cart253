@@ -20,7 +20,7 @@ let ant;
 let foods = [];
 let numCherries = 3;
 let numRocks = 25;
-let numBread = 2;
+let numBread = 3;
 
 
 let tileBlue = {
@@ -57,13 +57,12 @@ let tileWhite = {
 // }
 
 function setup() {
-  createCanvas(1300,800);
+  createCanvas(1350,840);
 
   //Creates ant centered on the tile
   let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
   let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/2;
   ant = new Ant(x,y);
-
 
   // Creates cherries by counting up to the number of cherries
   for (let i = 0; i < numCherries; i++) {
@@ -94,7 +93,7 @@ function setup() {
 //
 // Displays the different states when called.
 function draw() {
-  background(120);
+  background(45,194,112);
 
   //Calling tates
   if (state ===`title`) {
@@ -109,24 +108,6 @@ function draw() {
   if (state ===`lose`) {
     lose();
   }
-
-  // // Loop through all the cherries and displays them.
-  // for (let i = 0; i < object.cherries.length; i++) {
-  //     let cherry = object.cherries[i];
-  //     //Check if the cherry is captured
-  //     if (cherry.captured === false) {
-  //     cherry.display();
-  //
-  //     // If ant captures cherry , a new cherry appears.
-  //     if (cherry.checkCapture(ant)) {
-  //       let x = random(0, width);
-  //       let y = random(0, height);
-  //       let cherry = new Cherry(x,y);
-  //       object.cherries.push(cherry);
-  //       score ++;
-  //     }
-  //   }
-  // }
 }
 
 // Displaying the states.
@@ -137,13 +118,13 @@ function title() {
 function simulation() {
   //Display tiling
   push();
-  translate(60,60);
+  translate(60,120);
   tilingBlue();
   tilingWhite();
   pop();
   //Display design elements
-  displayScore();
   displayTimer();
+  displayScore();
   displayTitle();
   //Display Antonio the ant.
   ant.wrap();
@@ -226,22 +207,13 @@ function tilingWhite() {
   }
 }
 
-//Displays score on the canvas.
-function displayScore(){
-  push();
-  textFont(`Blenny`);
-  fill(245,190,90); // bread brown color
-  textSize(24);
-  text(`SCORE - ${score}`, 1100, 80);
-  pop();
-}
 //Displays timer on the canvas.
 function displayTimer(){
   push();
   textFont(`Blenny`);
   fill(245,190,90); // bread brown color
   textSize(24);
-  text(`timer - ${timer}`, 1100, 120);
+  text(`${timer} seconds left`, 1050, 190);
 
 
   if (frameCount % 60 == 0 && timer > 0) {
@@ -253,14 +225,24 @@ function displayTimer(){
     pop();
   }
 
+  //Displays score on the canvas.
+  function displayScore(){
+    push();
+    textFont(`Blenny`);
+    fill(245,190,90); // bread brown color
+    textSize(40);
+    text(`${score} points`, 1050, 150);
+    pop();
+  }
+
 //Displays the title.
 function displayTitle(){
   push();
   textFont(`Blenny`);
-  textSize(50);
+  textSize(70);
   fill(245,190,90); // brown color
-  textLeading(45);
-  text(`GET\nTHAT\nBREAD`, 1100, 570);
+  textLeading(53);
+  text(`GET\nTHAT\nBREAD`, 1050, 612);
   pop();
 }
 
