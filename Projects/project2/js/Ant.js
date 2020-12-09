@@ -72,12 +72,14 @@ class Ant {
       }
     }
   }
-
+    //move()
+    //Ant movement
     move() {
       this.x += this.vx;
       this.y += this.vy;
     }
 
+    //Wraps the ant to th border of the tiles
     wrap() {
       if (this.x >= this.borderRight) {
         this.x = this.borderRight;
@@ -93,6 +95,7 @@ class Ant {
       }
     }
 
+    //Displays Antonio the ant
     display() {
       push();
       fill(0);
@@ -122,6 +125,7 @@ class Ant {
       pop();
     }
 
+    //Use arrow keys to move Antonio
     keyPressed() {
       //Horizontal movement
       if (keyCode === LEFT_ARROW) {

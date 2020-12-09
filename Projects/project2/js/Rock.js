@@ -1,4 +1,7 @@
 class Rock extends Food {
+  //constructor
+  //
+  //Sets the rock up from the food superclass.
   constructor(x,y) {
     super(x,y);
     this.width = 30;

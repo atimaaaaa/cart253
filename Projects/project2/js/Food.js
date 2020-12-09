@@ -1,4 +1,7 @@
 class Food {
+  //constructor
+  //
+  //Sets any of the food up
   constructor(x,y) {
     this.x = x;
     this.y = y;
@@ -7,7 +10,7 @@ class Food {
     this.vx = 0;
     this.vy = 0;
     this.speed = undefined;
-    // The border of the background grid.
+    // The border of the background grid. Acts like a wrapper
     this.borderLeft = 90;
     this.borderRight = 1100;
     this.borderTop = 150;
@@ -21,6 +24,7 @@ class Food {
     this.y += this.vy;
   }
 
+  //Wraps the food inside the grid.
   wrap() {
     if (this.x > this.borderRight) {
       this.x = this.borderRight;

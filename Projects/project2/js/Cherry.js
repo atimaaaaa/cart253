@@ -1,4 +1,7 @@
 class Cherry extends Food {
+  //constructor
+  //
+  //Sets the cherry up from the food superclass.
   constructor(x,y) {
     super(x,y);
     this.width = 20;

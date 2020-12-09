@@ -1,4 +1,7 @@
 class Bread extends Food {
+  //constructor
+  //
+  //Sets the bread up from the food superclass.
   constructor(x,y) {
     super(x,y);
     this.width = 20;
@@ -19,7 +22,6 @@ class Bread extends Food {
   //Displays bread on the canvas
   display() {
     super.display();
-
     //Displays bread
     push();
     strokeWeight(5);

@@ -5,18 +5,18 @@ By Atima Ng
 All art and code by Atima Ng.
 Audio and music by Etienne Dube.
 
-In this game, help Antonio the Ant to gather as much food from the picnic blanket to the Princess before time runs out. Antonio knows the princess' favorite food are cherries, and especially fluffy pieces of bread. This game simulates retro games of the 90's, especially in th character tile movement and art style.
+In this game, help Antonio the Ant to gather as much food from the picnic blanket to the Princess before time runs out. Antonio knows the princess' favorite food are cherries, and especially fluffy pieces of bread. This game simulates retro games of the 90's, especially in th character tile movement and art style. Note: I am aware sometimes the ant spawns at the exact location of a food item. I discussed this with Pippin and he said it was fine to leave it as is for now!
 
 INSTRUCTIONS:
 Use the arrow keys to guide Antonio the ant towards the foods: cherries and bread. Be careful to avoid those pesky rocks along the way as those damage the internal organ system of Ants. Gather as much food for the princess before time runs out!
 **************************************************/
 
-//Let's create some variables!
+//Time to create some variables!
 //
 //Create initial state
 "use strict"
-let state = `title`; // Possible states: title, simulation, win and lose.
-let introState = 0;
+let state = `lose`; // Possible states: title, simulation, win and lose.
+let introState = 4;
 let gameStarted = false;
 
 //Create score and timer
@@ -71,6 +71,7 @@ let tileWhite = {
 let imgIntro1;
 let imgIntro2;
 let imgIntro3;
+let imgIntro4;
 
 //Audio variables
 let bgMusic;
@@ -86,6 +87,7 @@ function preload() {
   imgIntro1 = loadImage('assets/images/intro1_final.png');
   imgIntro2 = loadImage('assets/images/intro2_final.png');
   imgIntro3 = loadImage('assets/images/intro3_final.png');
+  imgIntro4 = loadImage('assets/images/intro4_final.gif');
 
   //AUDIO
   //Load all audio files
@@ -102,8 +104,8 @@ function setup() {
   //Canvas
   createCanvas(1350,840);
   //Create Antonio the ant.
-  let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
-  let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/2;
+  let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2; //random x position inside the tiles
+  let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/2; // random y position inside the tiles
   ant = new Ant(x,y);
   //Create food items by counting up to the number of food specified
   //Cherries
@@ -135,27 +137,62 @@ function setup() {
 function draw() {
   background(45,194,112);
   //Calling states
-  if (state ===`title`) {
+  if (state === `title`) {
     title();
   }
-  if (state ===`simulation`) {
+  if (state === `simulation`) {
     simulation();
   }
-  if (state ===`win`) {
+  if (state === `win`) {
     win();
   }
-  if (state ===`lose`) {
+  if (state === `lose`) {
     lose();
   }
 }
 
 //Function title()
 //
-//Function to displaying the title state.
+//Function to display and handle the different title states in order. The bg music plays when it is loaded and ready to play!
 function title() {
-  handleGameIntro();
+  //Intro title 1
+  if (introState === 0) {
+    displayIntroTitle();
+  }
+  else if(introState === 1) {
+    image(imgIntro1, 0, 0,1360,840); //Introduction story image 1
+    //Play background music in a loop when loaded
+    if (bgMusic.isPlaying() === false) {
+      bgMusic.loop();
+    }
+  }
+  else if(introState === 2) {
+    image(imgIntro2, 0, 0,1360,840); //Introduction story image 2
+    if (bgMusic.isPlaying() === false) {
+      bgMusic.loop();
+    }
+  }
+  else if(introState === 3) {
+    image(imgIntro3, 0, 0,1360,840); //Introduction story image 3
+    if (bgMusic.isPlaying() === false) {
+      bgMusic.loop();
+    }
+  }
+  else if(introState === 4) {
+    imageMode(CENTER);
+    image(imgIntro4, width/2, height/2+200,250,140); //Introduction story image 4
+    //Instructions screen
+    fill(255); //white
+    displayText(`Use the arrow keys to move Antonio!
+  Gather 500 points before time runs out`);
+    if (bgMusic.isPlaying() === false) {
+      bgMusic.loop();
+    }
+  }
+  else {
+    state =`simulation`;
+  }
 }
-
 //Function simulation
 //
 //Function to display elements of th main game.
@@ -182,7 +219,7 @@ function simulation() {
     ant.checkEat(food);
   }
   //Change to win state
-  if (score >= 50){
+  if (score >= 500){
     state = `win`;
   }
   //Change to LOSE state
@@ -195,6 +232,7 @@ function simulation() {
 //
 // Displays text when user wins!
 function win() {
+  fill(tileWhite.fill.r, tileWhite.fill.g, tileWhite.fill.b); // Same white as white tiles
   displayText(`YOU HAVE GATHERED ALL
     THE BREAD. CONGRATS!`);
 }
@@ -202,31 +240,12 @@ function win() {
 //
 // Displays text when user loses!
 function lose() {
-  displayText(`YOU DIED. VERY SAD! TRY AGAIN?`);
-}
-
-//handleGameIntro()
-//
-//Runs introduction images in order. If the music is loaded, it plays!
-function handleGameIntro(){
-  //Intro title 1
-  if (introState === 0) {
-    displayIntroTitle();
-  }
-  else if(introState === 1) {
-    image(imgIntro1, 0, 0,1360,840);
-    //Play background music
-    bgMusic.play();
-  }
-  else if(introState === 2) {
-    image(imgIntro2, 0, 0,1360,840);
-  }
-  else if(introState === 3) {
-    image(imgIntro3, 0, 0,1360,840);
-  }
-  else {
-    state =`simulation`;
-  }
+  imageMode(CENTER);
+  image(imgIntro4, width/2, height/2+200,250,140); //Introduction story image 4
+  fill(tileWhite.fill.r, tileWhite.fill.g, tileWhite.fill.b); // Same white as white tiles
+  displayText(`You died.
+    Will the princess ever notice Antonio?
+    Try again to find out!`);
 }
 
 //Displays introduction title and instructions
@@ -251,7 +270,7 @@ function displayIntroTitle(){
 function displayTimer(){
   push();
   textFont(`Blenny`);
-  fill(245,190,90); // bread brown color
+  fill(breadFill.r, breadFill.g, breadFill.b);
   textSize(24);
   text(`${timer} seconds left`, 1050, 190);
 
@@ -263,16 +282,15 @@ function displayTimer(){
   }
     pop();
   }
-
-  //Displays score on the canvas.
-  function displayScore(){
-    push();
-    textFont(`Blenny`);
-    fill(breadFill.r, breadFill.g, breadFill.b);
-    textSize(40);
-    text(`${score} points`, 1050, 150);
-    pop();
-  }
+//Displays score on the canvas.
+function displayScore(){
+  push();
+  textFont(`Blenny`);
+  fill(tileWhite.fill.r, tileWhite.fill.g, tileWhite.fill.b); // Same white as white tiles
+  textSize(40);
+  text(`${score} points`, 1050, 150);
+  pop();
+}
 
 //Display the title name on the simulation state
 function displayTitle(){
@@ -291,7 +309,7 @@ function displayText(string){
   textFont(`Blenny`);
   textAlign(CENTER,CENTER);
   textSize(60);
-  fill(breadFill.r, breadFill.g, breadFill.b);
+  // fill(breadFill.r, breadFill.g, breadFill.b);
   text(string, width/2, height/2);
   pop();
 }
@@ -353,8 +371,15 @@ function mouseClicked(){
   if (gameStarted === false) {
     introState += 1;
   }
-  if (introState >= 4){
+  if (introState >= 5){
     gameStarted = true;
+    simulation();
+  }
+  if (state === `lose`) {
+    gameStarted = false;
+    score.reset();
+    timer.reset();
+    ant.reset();
     simulation();
   }
 }
@@ -366,9 +391,5 @@ function keyPressed(){
   if (state === `simulation`) {
     ant.keyPressed();
     ant.move();
-  }
-  if (state === `lose`) {
-    score.reset();
-    timer.reset();
   }
 }
