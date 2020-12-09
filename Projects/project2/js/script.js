@@ -23,6 +23,13 @@ let gameStarted = false;
 let score = 0;
 let timer = 100;
 
+//Create brown typography color
+let breadFill = {
+  r:245,
+  g: 190,
+  b: 90
+}
+
 //Create ant and foods: Items appearing on canvas.
 let ant;
 let foods = [];
@@ -75,15 +82,14 @@ let rockSFX;
 //
 //Preload images, food items, canvas size, and audio.
 function preload() {
-  //IMAGES
-  //Intro
+  //Intro images
   imgIntro1 = loadImage('assets/images/intro1_final.png');
   imgIntro2 = loadImage('assets/images/intro2_final.png');
   imgIntro3 = loadImage('assets/images/intro3_final.png');
 
   //AUDIO
   //Load all audio files
-  bgMusic = loadSound('assets/sounds/ANT.mp3');
+  bgMusic = loadSound('assets/sounds/ANT_v2.mp3');
   cherrySFX = loadSound('assets/sounds/cherry.mp3');
   breadSFX = loadSound('assets/sounds/bread.mp3');
   rockSFX = loadSound('assets/sounds/rock.mp3');
@@ -128,7 +134,7 @@ function setup() {
 // Displays the different states when called.
 function draw() {
   background(45,194,112);
-  //Calling tates
+  //Calling states
   if (state ===`title`) {
     title();
   }
@@ -143,11 +149,16 @@ function draw() {
   }
 }
 
-// Displaying the states.
+//Function title()
+//
+//Function to displaying the title state.
 function title() {
   handleGameIntro();
 }
 
+//Function simulation
+//
+//Function to display elements of th main game.
 function simulation() {
   //Display tiling
   push();
@@ -162,9 +173,7 @@ function simulation() {
   //Display Antonio the ant.
   ant.wrap();
   ant.display();
-  // state
-
-  //Display foods
+  //Display loop of foods
   for (let i = 0; i < foods.length; i++) {
     let food = foods[i];
     food.move();
@@ -172,14 +181,28 @@ function simulation() {
     food.display();
     ant.checkEat(food);
   }
+  //Change to win state
+  if (score >= 50){
+    state = `win`;
+  }
+  //Change to LOSE state
+  if (timer === 0 || score < -100){
+    state = `lose`;
+  }
 }
 
+//Function win()
+//
+// Displays text when user wins!
 function win() {
-  displayText(`YOU ARE A HEATHLY ANT`);
+  displayText(`YOU HAVE GATHERED ALL
+    THE BREAD. CONGRATS!`);
 }
-
+//Function lose()
+//
+// Displays text when user loses!
 function lose() {
-  displayText(`YOU DIED. VERY SAD!`);
+  displayText(`YOU DIED. VERY SAD! TRY AGAIN?`);
 }
 
 //handleGameIntro()
@@ -192,6 +215,8 @@ function handleGameIntro(){
   }
   else if(introState === 1) {
     image(imgIntro1, 0, 0,1360,840);
+    //Play background music
+    bgMusic.play();
   }
   else if(introState === 2) {
     image(imgIntro2, 0, 0,1360,840);
@@ -210,7 +235,7 @@ function displayIntroTitle(){
   textFont(`Blenny`);
   textAlign(CENTER,CENTER);
   textSize(140);
-  fill(245,190,90); // bread brown color
+  fill(breadFill.r, breadFill.g, breadFill.b);
   text(`get this bread`, width/2, height/2);
   pop();
   push();
@@ -243,34 +268,35 @@ function displayTimer(){
   function displayScore(){
     push();
     textFont(`Blenny`);
-    fill(245,190,90); // bread brown color
+    fill(breadFill.r, breadFill.g, breadFill.b);
     textSize(40);
     text(`${score} points`, 1050, 150);
     pop();
   }
 
-//Displays the title.
+//Display the title name on the simulation state
 function displayTitle(){
   push();
   textFont(`Blenny`);
   textSize(70);
-  fill(245,190,90); // brown color
+  fill(breadFill.r, breadFill.g, breadFill.b);
   textLeading(53);
   text(`GET\nTHAT\nBREAD`, 1050, 612);
   pop();
 }
 
+// Display string of text in win() and lose() state
 function displayText(string){
   push();
   textFont(`Blenny`);
   textAlign(CENTER,CENTER);
-  textSize(32);
-  fill(255);
+  textSize(60);
+  fill(breadFill.r, breadFill.g, breadFill.b);
   text(string, width/2, height/2);
   pop();
 }
 
-// Draws background tiles
+// Draws blue background tiles
 function tilingBlue() {
   let x = 0;
   let y = 0; // before y = 60
@@ -295,7 +321,7 @@ function tilingBlue() {
   }
 }
 
-// Draws background white tiles
+// Draws white background tiles
 function tilingWhite() {
   let x = 60;
   let y = 0; // before y = 60
@@ -335,10 +361,14 @@ function mouseClicked(){
 
 //keyPressed()
 //
-//Run whenever the user clicks the mouse
+//Run whenever the user presses on a key.
 function keyPressed(){
-  if(state === `simulation`) {
+  if (state === `simulation`) {
     ant.keyPressed();
     ant.move();
+  }
+  if (state === `lose`) {
+    score.reset();
+    timer.reset();
   }
 }

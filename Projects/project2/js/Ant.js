@@ -1,4 +1,7 @@
 class Ant {
+  //constructor
+  //
+  //sets the ant up
   constructor(x,y){
     this.x = x;
     this.y = y;
@@ -22,37 +25,50 @@ class Ant {
     this.borderBottom = 660;
   }
 
+  //checkFood()
+  //
+  //Checks if ant overlaps with one of the foods
   checkEat(food){
-    let d = dist(this.x, this.y, food.x, food.y);
     //Check overlap with foods.
+    let d = dist(this.x, this.y, food.x, food.y);
     if (d < (this.size*3)/2 + food.width/2){
       //Check overlap between cherry and ant.
       if (food instanceof Cherry) {
         let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
         let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/4;
+          // Another cherry appears if they overlap
           food.x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
           food.y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/4;
+          //Add score if ANT and CHERRY overlap
           score+=10;
-          // cherrySFX.play();
+          //Play sound if ANT AND CHERRY overlap
+          cherrySFX.play();
       }
       //Check overlap between bread and ant.
       else if (food instanceof Bread) {
         let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
         let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/2;
+        //Add score if ANT and BREAD overlap
         food.x = x;
         food.y = y;
+        //Add score if ANT and BREAD overlap
         score+=20;
+        //Play sound if ANT AND BREAD overlap
+        breadSFX.play();
       }
       //Check overlap between rock and ant.
       else if(food instanceof Rock) {
         let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
         let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/2;
-        //Ant returns to the start of the grid
+        //Ant respawns randomly if there is overlap
         this.x = 0;
         food.y = 60;
         food.x = x;
         food.y = y;
+        //Minus score if ANT and ROCK overlap
         score-= 20;
+        //Play sound if ANT AND BREAD overlap
+        rockSFX.play();
       }
     }
   }
