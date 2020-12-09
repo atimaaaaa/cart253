@@ -140,13 +140,13 @@ function draw() {
   if (state === `title`) {
     title();
   }
-  if (state === `simulation`) {
+  else if (state === `simulation`) {
     simulation();
   }
-  if (state === `win`) {
+  else if (state === `win`) {
     win();
   }
-  if (state === `lose`) {
+  else if (state === `lose`) {
     lose();
   }
 }
@@ -179,8 +179,10 @@ function title() {
     }
   }
   else if(introState === 4) {
+    push();
     imageMode(CENTER);
     image(imgIntro4, width/2, height/2+200,250,140); //Introduction story image 4
+    pop();
     //Instructions screen
     fill(255); //white
     displayText(`Use the arrow keys to move Antonio!
@@ -240,12 +242,14 @@ function win() {
 //
 // Displays text when user loses!
 function lose() {
+  push();
   imageMode(CENTER);
   image(imgIntro4, width/2, height/2+200,250,140); //Introduction story image 4
   fill(tileWhite.fill.r, tileWhite.fill.g, tileWhite.fill.b); // Same white as white tiles
-  displayText(`You died.
+  displayText(`You lost.
     Will the princess ever notice Antonio?
     Try again to find out!`);
+    pop();
 }
 
 //Displays introduction title and instructions
@@ -368,19 +372,20 @@ function tilingWhite() {
 //
 //Run whenever the user clicks the mouse
 function mouseClicked(){
-  if (gameStarted === false) {
+  if (state === `title`) {
     introState += 1;
+    if (introState === 5) {
+      state = `simulation`;
+    }
   }
-  if (introState >= 5){
-    gameStarted = true;
-    simulation();
-  }
-  if (state === `lose`) {
+  else if (state === `lose`) {
     gameStarted = false;
-    score.reset();
-    timer.reset();
-    ant.reset();
-    simulation();
+    score = 0;
+    timer = 90*60;
+    ant.x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2; //random x position inside the tiles
+    ant.y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/2; // random y position
+    state = 'title';
+    introState = 0;
   }
 }
 
