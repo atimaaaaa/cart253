@@ -1,5 +1,5 @@
 /**************************************************
-Get that Bread!
+Get that Bread! - CART253 Project 2
 By Atima Ng
 
 All art and code by Atima Ng.
@@ -15,13 +15,13 @@ Use the arrow keys to guide Antonio the ant towards the foods: cherries and brea
 //
 //Create initial state
 "use strict"
-let state = `lose`; // Possible states: title, simulation, win and lose.
-let introState = 4;
+let state = `title`; // Possible states: title, simulation, win and lose.
+let introState = 0;
 let gameStarted = false;
 
 //Create score and timer
 let score = 0;
-let timer = 100;
+let timer = 60; //60 seconds
 
 //Create brown typography color
 let breadFill = {
@@ -186,7 +186,8 @@ function title() {
     //Instructions screen
     fill(255); //white
     displayText(`Use the arrow keys to move Antonio!
-  Gather 500 points before time runs out`);
+  1. Avoid the grey rocks
+  2. Gather 500 points before time runs out!`);
     if (bgMusic.isPlaying() === false) {
       bgMusic.loop();
     }
@@ -235,8 +236,9 @@ function simulation() {
 // Displays text when user wins!
 function win() {
   fill(tileWhite.fill.r, tileWhite.fill.g, tileWhite.fill.b); // Same white as white tiles
-  displayText(`YOU HAVE GATHERED ALL
-    THE BREAD. CONGRATS!`);
+  displayText(`Congrats!
+  The princess will definitely notice you.
+  Click anywhere to get more bread!`);
 }
 //Function lose()
 //
@@ -248,7 +250,7 @@ function lose() {
   fill(tileWhite.fill.r, tileWhite.fill.g, tileWhite.fill.b); // Same white as white tiles
   displayText(`You lost.
     Will the princess ever notice Antonio?
-    Try again to find out!`);
+    Click anywhere to try again.`);
     pop();
 }
 
@@ -277,15 +279,15 @@ function displayTimer(){
   fill(breadFill.r, breadFill.g, breadFill.b);
   textSize(24);
   text(`${timer} seconds left`, 1050, 190);
-
   if (frameCount % 60 == 0 && timer > 0) {
     timer --;
   }
-  if (timer == 0) {
-    text("GAME OVER", width, height);
+  // if (timer == 0) {
+  //   text("GAME OVER", width, height);
+  // }
+  pop();
   }
-    pop();
-  }
+
 //Displays score on the canvas.
 function displayScore(){
   push();
@@ -313,7 +315,6 @@ function displayText(string){
   textFont(`Blenny`);
   textAlign(CENTER,CENTER);
   textSize(60);
-  // fill(breadFill.r, breadFill.g, breadFill.b);
   text(string, width/2, height/2);
   pop();
 }
@@ -372,16 +373,28 @@ function tilingWhite() {
 //
 //Run whenever the user clicks the mouse
 function mouseClicked(){
+  //User clicks to advance the introduction
   if (state === `title`) {
     introState += 1;
     if (introState === 5) {
       state = `simulation`;
     }
   }
+  //If user wins, click to restart
+  else if (state === `win`) {
+    gameStarted = false;
+    score = 0;
+    timer = 60;
+    ant.x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2; //random x position inside the tiles
+    ant.y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/2; // random y position
+    state = 'simulation';
+    introState = 0;
+  }
+  //If user loses, click to restart
   else if (state === `lose`) {
     gameStarted = false;
     score = 0;
-    timer = 90*60;
+    timer = 60;
     ant.x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2; //random x position inside the tiles
     ant.y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/2; // random y position
     state = 'title';

@@ -13,7 +13,6 @@ class Rock extends Food {
       b:100,
     };
   }
-
   //Displays rock on the canvas
   display() {
     super.display();

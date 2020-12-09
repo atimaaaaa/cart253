@@ -40,7 +40,7 @@ class Ant {
           food.x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
           food.y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/4;
           //Add score if ANT and CHERRY overlap
-          score+=10;
+          score+=25;
           //Play sound if ANT AND CHERRY overlap
           cherrySFX.play();
       }
@@ -52,7 +52,7 @@ class Ant {
         food.x = x;
         food.y = y;
         //Add score if ANT and BREAD overlap
-        score+=20;
+        score+=50;
         //Play sound if ANT AND BREAD overlap
         breadSFX.play();
       }
