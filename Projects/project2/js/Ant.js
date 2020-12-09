@@ -30,9 +30,10 @@ class Ant {
       if (food instanceof Cherry) {
         let x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
         let y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/4;
-          food.x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;;
-          food.y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/4;;
-          score+=2;
+          food.x = floor(random(0, tileBlue.columns))* tileBlue.size + tileBlue.size/2;
+          food.y = floor(random(0,tileBlue.rows))* tileBlue.size + tileBlue.size/4;
+          score+=10;
+          // cherrySFX.play();
       }
       //Check overlap between bread and ant.
       else if (food instanceof Bread) {
@@ -96,13 +97,13 @@ class Ant {
       rect(this.x - this.spacing - this.legSpacing, (this.y + 10),this.legWidth, this.legHeight);
       rect(this.x - this.spacing + this.legSpacing, (this.y + 10),this.legWidth, this.legHeight);
       pop();
-      // //ANTena
-      // push();
-      // fill(0);
-      // noStroke();
-      //
-      // rect(this.x + this.spacing, this.y - 15,this.antenaWidth, this.antenaHeight);
-      // pop();
+      //ANTena
+      push();
+      fill(0);
+      noStroke();
+
+      rect(this.x + this.spacing, this.y - 15,this.antenaWidth, this.antenaHeight);
+      pop();
     }
 
     keyPressed() {
